@@ -131,7 +131,7 @@ plt_q2 = dat |>
       facet_wrap(~ variable, scales = "free_x") +
       facetted_pos_scales(
          x = list(
-            scale_x_continuous(limits = c(0, 4)),
+            scale_x_continuous(limits = c(1, 4), expand = expansion(mult=0.2)),
             scale_x_continuous(limits = c(-4, 4), breaks = seq(-4, 4, 1))
          )
       )
@@ -203,9 +203,9 @@ ggsave("output/q4_correlation-matrix.png")
 #| fig-width: 6
 #| fig-height: 4
 
-# dat |>
-#    ggplot() +
-#       geom_point(aes(T_op, PMV))
+dat |>
+   ggplot() +
+      geom_point(aes(T_op, PMV))
 
 ```
 
@@ -221,7 +221,30 @@ explain what happened.
 ## 5. Normality of TC and TS
 
 ```{r q5}
-# [WRITE YOUR CODE] A test AND a plot. Do not rely on the p-value alone.
+#| fig-cap: "Normality"
+#| fig-width: 8
+#| fig-height: 4
+
+q5_qqplot = function(df, var, varlabel, axlim) {
+   p_val = shapiro.test(df[[var]])$p.value
+   p_val = signif(p_val, digits = 2)
+   
+   df |>
+      ggplot(aes(sample = .data[[var]])) +
+         stat_qq(size = 1.5) +
+         stat_qq_line(color = "gray") +
+         labs(title = varlabel, y = "Sample", x = "Theoretical") +
+         scale_x_continuous(breaks = seq(-4, 4, 1), limits = axlim) +
+         scale_y_continuous(breaks = seq(-4, 4, 1), limits = axlim) +
+         annotate("text", x = -Inf, y = 4, hjust = -0.1, label = str_c("p-value: ", p_val))
+}
+   
+plt_q5_TC = q5_qqplot(dat, "TC", "Thermal Comfort (TC)", c(1, 4))
+plt_q5_TS = q5_qqplot(dat, "TS", "Thermal Sensation (TS)", c(-4, 4))
+plt_q5 = plt_q5_TC + plt_q5_TS
+
+ggsave("output/q5_normality.png")
+plt_q5
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES. Are they normal? Does it matter, and for what?]
