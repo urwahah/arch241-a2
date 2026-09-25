@@ -19,6 +19,7 @@ library(tidyverse)
 library(ggplot2)
 library(gt)
 library(ggh4x)
+library(patchwork)
 ```
 
 ```{r setup-theme}
@@ -40,7 +41,8 @@ load_palette = c("#010090", "#8f0300")
 load("data/arch241a2.rda")
 d <- arch241a2
 dat = tibble(d) |>
-   rename(T_op = Top)
+   rename(T_op = Top) |> # for clarity
+   mutate(Subject = factor(Subject, levels = as.character(sort(as.numeric(levels(Subject)))))) # relevel so it's sorted numerically, but kept as character for plotting
 ```
 
 ## About this dataset — read before you start
@@ -113,6 +115,7 @@ gtsave(tbl_q1, "output/q1_statistical-summary.html")
 #| fig-cap: "Histograms"
 #| fig-width: 8
 #| fig-height: 4
+
 plt_q2 = dat |>
    select(TC, TS) |>
    pivot_longer(cols = c(TC, TS), names_to = "variable", values_to = "value") |>
@@ -142,8 +145,29 @@ i have simplified to single vote count rather than continuous scale
 
 ## 3. Boxplots of TS vs Sex, Subject and Experiment
 
-```{r q3}
-# [WRITE YOUR CODE] Three plots.
+```{r fig-q3}
+#| fig-cap: "Box plots"
+#| fig-width: 8
+#| fig-height: 6
+
+q3_boxplot = function(df, var) {
+   df |>
+   ggplot() +
+      geom_boxplot(aes(.data[[var]], TS)) +
+      labs(y = "Thermal Sensation (TS)") +
+      scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4))
+}
+
+dat_q3 = dat |>
+   filter(Experiment != "P") 
+   
+plt_q3_sex = q3_boxplot(dat_q3, "Sex")
+plt_q3_subject = q3_boxplot(dat_q3, "Subject")
+plt_q3_experiment = q3_boxplot(dat_q3, "Experiment")
+plt_q3 = (plt_q3_sex + plt_q3_experiment) / plt_q3_subject
+
+plt_q3
+ggsave("output/q3_boxplots.png")
 # The Subject one is the least obvious and the most informative — look at it carefully.
 ```
 
