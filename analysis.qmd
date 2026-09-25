@@ -1,7 +1,7 @@
 ---
 title: "Assignment #2 — Statistical analysis of thermal comfort research"
-author: "YOUR NAME"
-date: today
+author: "Urwa Irfan"
+date: "`r Sys.Date()`"
 format:
   html:
     toc: true
@@ -13,27 +13,15 @@ execute:
   message: false
 ---
 
-<!--
-HOW TO USE THIS FILE
-1. Click "Render" in RStudio (or run: quarto render analysis.qmd).
-   If it renders before you change anything, your setup works.
-2. Answer the eight questions below. Replace every [WRITE ...] prompt.
-3. Every number in your text must come from a code chunk, not from
-   typing it in by hand. That is the whole point of Quarto.
-4. Render one more time before you submit, from a fresh R session
-   (Session > Restart R). If it only renders in your current session,
-   it is not reproducible.
--->
-
 ```{r setup}
+library(tidyverse)
 library(ggplot2)
-library(dplyr)
-library(tidyr)
 
 theme_set(theme_minimal(base_size = 12))
 
 load("data/arch241a2.rda")
 d <- arch241a2
+dat = tibble(d)
 ```
 
 ## About this dataset — read before you start

@@ -2,7 +2,10 @@
 
 Statistical analysis of a thermal comfort chamber study.
 
-**Author:** *your name*
+**Author:** Urwa Irfan
+
+**Date last updated:** 24 Sep 2026
+
 **Rendered report:** *paste your GitHub Pages link here after you enable it, or
 link `analysis.html` in the repo*
 
@@ -10,8 +13,8 @@ link `analysis.html` in the repo*
 
 ```
 .
-├── analysis.qmd      # the analysis — this is the file you edit
-├── analysis.html     # the rendered report — commit this too
+├── analysis.qmd      # the analysis 
+├── analysis.html     # the rendered report
 ├── data/
 │   └── arch241a2.rda # the dataset, unmodified
 ├── README.md
@@ -25,7 +28,7 @@ link `analysis.html` in the repo*
    [Quarto](https://quarto.org/docs/get-started/).
 2. Install the packages used here:
    ```r
-   install.packages(c("ggplot2", "dplyr", "tidyr"))
+   install.packages(c("ggplot2", "tidyverse"))
    ```
 3. Open `analysis.qmd` in RStudio and click **Render** — or run
    `quarto render analysis.qmd` in a terminal.
