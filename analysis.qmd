@@ -20,6 +20,7 @@ library(ggplot2)
 library(gt)
 library(ggh4x)
 library(patchwork)
+library(ggcorrplot)
 ```
 
 ```{r setup-theme}
@@ -113,8 +114,8 @@ gtsave(tbl_q1, "output/q1_statistical-summary.html")
 
 ```{r fig-q2}
 #| fig-cap: "Histograms"
-#| fig-width: 8
-#| fig-height: 4
+#| fig-width: 6
+#| fig-height: 3
 
 plt_q2 = dat |>
    select(TC, TS) |>
@@ -178,9 +179,37 @@ ggsave("output/q3_boxplots.png")
 
 Variables: PMV, PPD, RH, TA, TC, TS, Top.
 
-```{r q4}
-# [WRITE YOUR CODE]
+```{r fig-q4}
+#| fig-cap: "Correlation matrix"
+#| fig-width: 6
+#| fig-height: 6
+
+plt_q4 = dat |>
+   select(T_op, RH, TS, TC, TA, PMV, PPD) |>
+   cor() |>
+   ggcorrplot(type = "lower", outline.color = "black", lab = TRUE) +
+      labs(x = "", y = "", fill = "Correlation\ncoefficient") +
+      scale_fill_gradient2(low = "#4c59ea", high = "#ea544c") +
+      theme_minimal() +
+      theme(legend.position = "inside", legend.position.inside = c(0.2, 0.8), legend.background = element_rect(colour = "#e0e0e0"),
+         axis.text.x = element_text(angle = 0))
+
+plt_q4
+ggsave("output/q4_correlation-matrix.png")
 ```
+
+```{r fig-q4_high-corr}
+#| fig-cap: "Correlation matrix"
+#| fig-width: 6
+#| fig-height: 4
+
+# dat |>
+#    ggplot() +
+#       geom_point(aes(T_op, PMV))
+
+```
+
+PMV/PPD were directly calculated from the environmental conditions.(it just so happens that PMV is directly proportional to T_op - check?)
 
 **Interpretation.** [WRITE 2–3 SENTENCES]
 
