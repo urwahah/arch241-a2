@@ -1,0 +1,157 @@
+---
+title: "Assignment #2 — Statistical analysis of thermal comfort research"
+author: "YOUR NAME"
+date: today
+format:
+  html:
+    toc: true
+    code-fold: show
+    code-tools: true
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+<!--
+HOW TO USE THIS FILE
+1. Click "Render" in RStudio (or run: quarto render analysis.qmd).
+   If it renders before you change anything, your setup works.
+2. Answer the eight questions below. Replace every [WRITE ...] prompt.
+3. Every number in your text must come from a code chunk, not from
+   typing it in by hand. That is the whole point of Quarto.
+4. Render one more time before you submit, from a fresh R session
+   (Session > Restart R). If it only renders in your current session,
+   it is not reproducible.
+-->
+
+```{r setup}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+theme_set(theme_minimal(base_size = 12))
+
+load("data/arch241a2.rda")
+d <- arch241a2
+```
+
+## About this dataset — read before you start
+
+Thirty subjects each sat through seven conditions in a climate chamber in
+Guangzhou, giving 30 × 7 = 210 rows.
+
+| Variable | Meaning | Notes |
+|---|---|---|
+| `Top` | Operative temperature, °C | Equals air temperature here (MRT = Ta) |
+| `RH` | Relative humidity, % | Two levels: 50 and 70 |
+| `Sex` | F / M | 15 subjects each |
+| `Subject` | Subject ID, 1–30 | Each ID appears 7 times|
+| `TS` | Thermal sensation | ASHRAE scale, −4 cold … 0 neutral … +4 hot |
+| `TC` | Thermal discomfort | 0 = very comfortable … 4 = very uncomfortable |
+| `TA` | Thermal acceptability | Higher = more acceptable |
+| `PMV` | Predicted mean vote | Calculated from the design conditions |
+| `PPD` | Predicted % dissatisfied | Calculated from PMV |
+| `Experiment` | Condition A–F, plus P | P is pre-conditioning, not a test condition |
+
+```{r orient}
+str(d)
+```
+
+
+## 1. Statistical summary of all variables
+
+```{r q1}
+# [WRITE YOUR CODE] Summarise every variable.
+# Think: does a mean make sense for a factor? For a design variable like Top?
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES. What would you put in a paper?]
+
+
+## 2. Histograms of TC and TS
+
+```{r q2}
+# [WRITE YOUR CODE]
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES]
+
+
+## 3. Boxplots of TS vs Sex, Subject and Experiment
+
+```{r q3}
+# [WRITE YOUR CODE] Three plots.
+# The Subject one is the least obvious and the most informative — look at it carefully.
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES]
+
+
+## 4. Correlation matrix
+
+Variables: PMV, PPD, RH, TA, TC, TS, Top.
+
+```{r q4}
+# [WRITE YOUR CODE]
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES]
+
+Two of these correlations are strange. One pair is r = 1.00, and another pair
+is deterministically related yet shows a weak r. Find them, plot them, and
+explain what happened.
+
+
+## 5. Normality of TC and TS
+
+```{r q5}
+# [WRITE YOUR CODE] A test AND a plot. Do not rely on the p-value alone.
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES. Are they normal? Does it matter, and for what?]
+
+
+## 6. Does Sex significantly influence TS?
+
+```{r q6}
+# [WRITE YOUR CODE]
+# Then answer this, in your text: Sex is a property of a SUBJECT, and you have
+# 30 subjects but 210 rows. What is your real sample size, and what does using
+# 210 do to your p-value?
+# Try at least two approaches and report whether they agree.
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES]
+
+
+## 7. Linear regression: TS as a function of Top
+
+```{r q7}
+# [WRITE YOUR CODE] Fit the model, then TEST ITS VALIDITY.
+# The four assumptions: linearity, constant variance, normal residuals,
+# independent observations. Check all four and say which ones hold.
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES. Report the slope with units, the R²,
+and the neutral temperature — the Top at which predicted TS = 0. Compare it to
+what PMV predicts.]
+
+
+## 8. Your own research question
+
+**Question:** [WRITE YOUR QUESTION]
+
+```{r q8}
+# [WRITE YOUR CODE]
+```
+
+**Interpretation.** [WRITE 2–3 SENTENCES — the take-away message you would put
+in a paper.]
+
+
+## Session information
+
+```{r session}
+sessionInfo()
+```
