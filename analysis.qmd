@@ -87,7 +87,7 @@ variables = names(dat)[5:9]
 for (var in variables) {
    summary_results = rbind(summary_results, summarize_variable(dat, var))
 }
-summary_results |>
+tbl_q1 = summary_results |>
    relocate(variable) |>
    mutate(variable = case_when(
       variable == "TS" ~ "Thermal Sensation (TS)",
@@ -98,6 +98,9 @@ summary_results |>
    )) |>
    gt(rowname_col = "variable") |>
    fmt_number()
+
+tbl_q1
+gtsave(tbl_q1, "output/q1_statistical-summary.html")
 # Think: does a mean make sense for a factor? For a design variable like Top?
 ```
 
@@ -110,7 +113,7 @@ summary_results |>
 #| fig-cap: "Histograms"
 #| fig-width: 8
 #| fig-height: 4
-dat |>
+plt_q2 = dat |>
    select(TC, TS) |>
    pivot_longer(cols = c(TC, TS), names_to = "variable", values_to = "value") |>
    mutate(variable = case_when(
@@ -128,6 +131,9 @@ dat |>
             scale_x_continuous(limits = c(-4, 4), breaks = seq(-4, 4, 1))
          )
       )
+
+plt_q2
+ggsave("output/q2_histograms.png")
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES]
