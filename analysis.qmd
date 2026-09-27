@@ -1,5 +1,6 @@
 ---
-title: "Assignment #2 — Statistical analysis of thermal comfort research"
+title: "Assignment #2: Statistical analysis of thermal comfort research"
+subtitle: "Arch 241 - Fall 2026"
 author: "Urwa Irfan"
 date: "`r Sys.Date()`"
 format:
@@ -139,8 +140,8 @@ While data for TC and TS were collected on a continuous scale, I have simplified
 
 q3_boxplot = function(df, var) {
    df |>
-   ggplot() +
-      geom_boxplot(aes(.data[[var]], TS)) +
+   ggplot(aes(.data[[var]], TS)) +
+      geom_boxplot() +
       labs(y = "Thermal Sensation (TS)") +
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4))
 }
@@ -260,8 +261,8 @@ subtitle = str_c(
 )
 
 plt_q6 = dat |>
-   ggplot() +
-      geom_boxplot(aes(Sex, TS)) +
+   ggplot(aes(Sex, TS)) +
+      geom_boxplot() +
       facet_grid(. ~ Experiment) +
       labs(y = "Thermal Sensation (TS)", subtitle = subtitle) +
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4))
@@ -351,9 +352,9 @@ ggsave("output/q7_linear-regression-diagnostics.png", width = 8, height = 4, uni
 plt_q7_check
 ```
 
-## 8. Your own research question: TS as a function of PMV (T_op and RH)
+## 8. Your own research question:
 
-**Question:** [WRITE YOUR QUESTION]
+**Question:** Is PMV a better predictor of TS than T_op?
 
 ```{r q8}
 #| fig-cap: "PMV Linear regression"
