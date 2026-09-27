@@ -178,25 +178,34 @@ plt_q4
 ggsave("output/q4_correlation-matrix.png", width = 6, height = 6, units = "in")
 ```
 
-```{r fig-q4_high-corr}
-#| fig-cap: "Correlation matrix"
-#| fig-width: 6
+**Interpretation.** Thermal sensation has weak correlation with both of the other measured indicators because it signifies actual sensation and not comfort/discomfort. On the other hand, it makes sense that TC and TA have strong negative correlation, because a high thermal comfort value indicates discomfort and thus low thermal acceptability. The strongest correlation, with a coefficient of 1, is of operative temperature with PPD and is shown in @fig-q4_addl below; this can possibly be explained by the fact that operative temperature is one of the parameters used to calculate PMV (relative humidity is also a factor in the PMV calculation and has a middling correlation value of 0.52). Another interesting correlation is of PPD and PMV: PPD is directly calculated from PMV, but the PMV-PPD model is not linear so this analysis shows a weak correlation.
+
+```{r fig-q4_addl}
+#| fig-cap: "Correlation matrix - additional"
+#| fig-width: 8
 #| fig-height: 4
 
-dat |>
-   ggplot() +
-      geom_point(aes(T_op, PMV))
+plt_q4_strong = dat |>
+   ggplot(aes(T_op, PMV)) +
+      geom_point() +
+      geom_smooth(method = "lm") +
+      labs(x = "Operative Temperature (T_op, °C)", y = "PMV") +
+      annotate("text", x = 20, y = Inf, hjust = 0, vjust = 2, label = "Correlation coefficient = 1") +
+      scale_y_continuous(breaks = seq(-3, 3, 1), limits = c(-3, 3))
 
+plt_q4_weak = dat |>
+   ggplot(aes(PMV, PPD)) +
+      geom_point() +
+      geom_smooth() +
+      labs(x = "PMV", y = "PPD (%)") +
+      annotate("text", x = -3, y = Inf, hjust = 0, vjust = 2, label = "Correlation coefficient = 0.36") +
+      scale_x_continuous(breaks = seq(-3, 3, 1), limits = c(-3, 3)) +
+      scale_y_continuous(breaks = seq(0, 100, 10), limits = c(0, 100))
+
+plt_q4_addl = plt_q4_strong + plt_q4_weak
+ggsave("output/q4_correlation-additional.png", width = 8, height = 4, units = "in")
+plt_q4_addl
 ```
-
-PMV/PPD were directly calculated from the environmental conditions.(it just so happens that PMV is directly proportional to T_op - check?)
-
-**Interpretation.** [WRITE 2–3 SENTENCES]
-
-Two of these correlations are strange. One pair is r = 1.00, and another pair
-is deterministically related yet shows a weak r. Find them, plot them, and
-explain what happened.
-
 
 ## 5. Normality of TC and TS
 
@@ -294,7 +303,7 @@ neutral_temp = -model$coefficients["(Intercept)"]/model$coefficients["T_op"]
 plt_q7 = dat |>
    ggplot(aes(T_op, TS)) +
       geom_point() +
-      geom_smooth(method = "lm", color = "black") +
+      geom_smooth(method = "lm") +
       labs(y = "Thermal Sensation (TS)", x = "Operative Temperature (T_op, °C)") +
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
       annotate("text", label = caption, x = 20, y = 4, hjust = 0, vjust = 1)
@@ -331,8 +340,8 @@ bp_test_p_val = signif(ncvTest(model)$p, 2)
 plt_q7_residuals_variance = tibble(x = fitted(model), y = residuals) |>
    ggplot(aes(x, y)) +
       geom_point() +
-      geom_smooth(color = "black") +
-      geom_hline(yintercept = 0, color = "gray", linetype = 2) +
+      geom_smooth(method = "lm") +
+      # geom_hline(yintercept = 0, color = "gray", linetype = 2) +
       labs(title = "Residuals vs Fitted", x = "Fitted Values", y = "Residuals") +
       annotate("text", x = -Inf, y = Inf, hjust = -0.1, vjust = 1.5, label = str_c("BP test p-value: ", bp_test_p_val))
 
@@ -353,7 +362,10 @@ what PMV predicts.]
 **Question:** [WRITE YOUR QUESTION]
 
 ```{r q8}
-# could be interesting - do ppl tend to stay on an extreme? if someone is hot at the start are they near the hottest at the end
+dat |>
+   ggplot(aes(PMV, TS)) +
+   geom_point() +
+   geom_smooth(method = "lm")
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES — the take-away message you would put
