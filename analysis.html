@@ -2213,7 +2213,6 @@ vertical-align: -.125em;
    
   <ul>
   <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a></li>
-  <li><a href="#about-this-dataset-read-before-you-start" id="toc-about-this-dataset-read-before-you-start" class="nav-link" data-scroll-target="#about-this-dataset-read-before-you-start">About this dataset — read before you start</a></li>
   <li><a href="#statistical-summary-of-all-variables" id="toc-statistical-summary-of-all-variables" class="nav-link" data-scroll-target="#statistical-summary-of-all-variables">1. Statistical summary of all variables</a></li>
   <li><a href="#histograms-of-tc-and-ts" id="toc-histograms-of-tc-and-ts" class="nav-link" data-scroll-target="#histograms-of-tc-and-ts">2. Histograms of TC and TS</a></li>
   <li><a href="#boxplots-of-ts-vs-sex-subject-and-experiment" id="toc-boxplots-of-ts-vs-sex-subject-and-experiment" class="nav-link" data-scroll-target="#boxplots-of-ts-vs-sex-subject-and-experiment">3. Boxplots of TS vs Sex, Subject and Experiment</a></li>
@@ -2300,79 +2299,9 @@ vertical-align: -.125em;
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(d) <span class="sc">|&gt;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(<span class="at">T_op =</span> Top) <span class="sc">|&gt;</span> <span class="co"># for clarity</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">Subject =</span> <span class="fu">factor</span>(Subject, <span class="at">levels =</span> <span class="fu">as.character</span>(<span class="fu">sort</span>(<span class="fu">as.numeric</span>(<span class="fu">levels</span>(Subject)))))) <span class="sc">|&gt;</span> <span class="co"># relevel so it&#39;s sorted numerically, but kept as character for plotting</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(Experiment <span class="sc">!=</span> <span class="st">&quot;P&quot;</span>) <span class="co"># explain why</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(Experiment <span class="sc">!=</span> <span class="st">&quot;P&quot;</span>) <span class="co"># because this was not a real test condition</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
-</section>
-<section id="about-this-dataset-read-before-you-start" class="level2">
-<h2 class="anchored" data-anchor-id="about-this-dataset-read-before-you-start">About this dataset — read before you start</h2>
-<p>Thirty subjects each sat through seven conditions in a climate chamber in Guangzhou, giving 30 × 7 = 210 rows.</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Variable</th>
-<th>Meaning</th>
-<th>Notes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>Top</code></td>
-<td>Operative temperature, °C</td>
-<td>Equals air temperature here (MRT = Ta)</td>
-</tr>
-<tr class="even">
-<td><code>RH</code></td>
-<td>Relative humidity, %</td>
-<td>Two levels: 50 and 70</td>
-</tr>
-<tr class="odd">
-<td><code>Sex</code></td>
-<td>F / M</td>
-<td>15 subjects each</td>
-</tr>
-<tr class="even">
-<td><code>Subject</code></td>
-<td>Subject ID, 1–30</td>
-<td>Each ID appears 7 times</td>
-</tr>
-<tr class="odd">
-<td><code>TS</code></td>
-<td>Thermal sensation</td>
-<td>ASHRAE scale, −4 cold … 0 neutral … +4 hot</td>
-</tr>
-<tr class="even">
-<td><code>TC</code></td>
-<td>Thermal discomfort</td>
-<td>0 = very comfortable … 4 = very uncomfortable</td>
-</tr>
-<tr class="odd">
-<td><code>TA</code></td>
-<td>Thermal acceptability</td>
-<td>Higher = more acceptable</td>
-</tr>
-<tr class="even">
-<td><code>PMV</code></td>
-<td>Predicted mean vote</td>
-<td>Calculated from the design conditions</td>
-</tr>
-<tr class="odd">
-<td><code>PPD</code></td>
-<td>Predicted % dissatisfied</td>
-<td>Calculated from PMV</td>
-</tr>
-<tr class="even">
-<td><code>Experiment</code></td>
-<td>Condition A–F, plus P</td>
-<td>P is pre-conditioning, not a test condition</td>
-</tr>
-</tbody>
-</table>
 </section>
 <section id="statistical-summary-of-all-variables" class="level2">
 <h2 class="anchored" data-anchor-id="statistical-summary-of-all-variables">1. Statistical summary of all variables</h2>
@@ -2413,8 +2342,7 @@ vertical-align: -.125em;
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>   <span class="fu">fmt_number</span>()</span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>tbl_q1</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(tbl_q1, <span class="st">&quot;output/q1_statistical-summary.html&quot;</span>)</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Think: does a mean make sense for a factor? For a design variable like Top?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(tbl_q1, <span class="st">&quot;output/q1_statistical-summary.html&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="tbl-q1" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2423,20 +2351,20 @@ Table 1: Statistical summary
 </figcaption>
 <div aria-describedby="tbl-q1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="kcikaqulty" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kcikaqulty table {
+<div id="tqmvkpetsg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tqmvkpetsg table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 }
-#kcikaqulty thead, #kcikaqulty tbody, #kcikaqulty tfoot, #kcikaqulty tr, #kcikaqulty td, #kcikaqulty th {
+#tqmvkpetsg thead, #tqmvkpetsg tbody, #tqmvkpetsg tfoot, #tqmvkpetsg tr, #tqmvkpetsg td, #tqmvkpetsg th {
 border-style: none;
 }
-#kcikaqulty p {
+#tqmvkpetsg p {
 margin: 0;
 padding: 0;
 }
-#kcikaqulty .gt_table {
+#tqmvkpetsg .gt_table {
 display: table;
 border-collapse: collapse;
 line-height: normal;
@@ -2461,11 +2389,11 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#kcikaqulty .gt_caption {
+#tqmvkpetsg .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#kcikaqulty .gt_title {
+#tqmvkpetsg .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -2476,7 +2404,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#kcikaqulty .gt_subtitle {
+#tqmvkpetsg .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -2487,7 +2415,7 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#kcikaqulty .gt_heading {
+#tqmvkpetsg .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -2498,12 +2426,12 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#kcikaqulty .gt_bottom_border {
+#tqmvkpetsg .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#kcikaqulty .gt_col_headings {
+#tqmvkpetsg .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2517,7 +2445,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#kcikaqulty .gt_col_heading {
+#tqmvkpetsg .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2536,7 +2464,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#kcikaqulty .gt_column_spanner_outer {
+#tqmvkpetsg .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2547,13 +2475,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#kcikaqulty .gt_column_spanner_outer:first-child {
+#tqmvkpetsg .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#kcikaqulty .gt_column_spanner_outer:last-child {
+#tqmvkpetsg .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#kcikaqulty .gt_column_spanner {
+#tqmvkpetsg .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -2564,10 +2492,10 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#kcikaqulty .gt_spanner_row {
+#tqmvkpetsg .gt_spanner_row {
 border-bottom-style: hidden;
 }
-#kcikaqulty .gt_group_heading {
+#tqmvkpetsg .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2592,7 +2520,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#kcikaqulty .gt_empty_group_heading {
+#tqmvkpetsg .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -2606,13 +2534,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#kcikaqulty .gt_from_md > :first-child {
+#tqmvkpetsg .gt_from_md > :first-child {
 margin-top: 0;
 }
-#kcikaqulty .gt_from_md > :last-child {
+#tqmvkpetsg .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#kcikaqulty .gt_row {
+#tqmvkpetsg .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2630,7 +2558,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#kcikaqulty .gt_stub {
+#tqmvkpetsg .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2642,7 +2570,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kcikaqulty .gt_stub_row_group {
+#tqmvkpetsg .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -2655,13 +2583,13 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#kcikaqulty .gt_row_group_first td {
+#tqmvkpetsg .gt_row_group_first td {
 border-top-width: 2px;
 }
-#kcikaqulty .gt_row_group_first th {
+#tqmvkpetsg .gt_row_group_first th {
 border-top-width: 2px;
 }
-#kcikaqulty .gt_summary_row {
+#tqmvkpetsg .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2670,14 +2598,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kcikaqulty .gt_first_summary_row {
+#tqmvkpetsg .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#kcikaqulty .gt_first_summary_row.thick {
+#tqmvkpetsg .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#kcikaqulty .gt_last_summary_row {
+#tqmvkpetsg .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2686,7 +2614,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#kcikaqulty .gt_grand_summary_row {
+#tqmvkpetsg .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -2695,7 +2623,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kcikaqulty .gt_first_grand_summary_row {
+#tqmvkpetsg .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2704,7 +2632,7 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#kcikaqulty .gt_last_grand_summary_row_top {
+#tqmvkpetsg .gt_last_grand_summary_row_top {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -2713,10 +2641,10 @@ border-bottom-style: double;
 border-bottom-width: 6px;
 border-bottom-color: #D3D3D3;
 }
-#kcikaqulty .gt_striped {
+#tqmvkpetsg .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#kcikaqulty .gt_table_body {
+#tqmvkpetsg .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -2724,7 +2652,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#kcikaqulty .gt_footnotes {
+#tqmvkpetsg .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2737,7 +2665,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#kcikaqulty .gt_footnote {
+#tqmvkpetsg .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-top: 4px;
@@ -2745,7 +2673,7 @@ padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kcikaqulty .gt_sourcenotes {
+#tqmvkpetsg .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -2758,64 +2686,64 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#kcikaqulty .gt_sourcenote {
+#tqmvkpetsg .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#kcikaqulty .gt_left {
+#tqmvkpetsg .gt_left {
 text-align: left;
 }
-#kcikaqulty .gt_center {
+#tqmvkpetsg .gt_center {
 text-align: center;
 }
-#kcikaqulty .gt_right {
+#tqmvkpetsg .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#kcikaqulty .gt_font_normal {
+#tqmvkpetsg .gt_font_normal {
 font-weight: normal;
 }
-#kcikaqulty .gt_font_bold {
+#tqmvkpetsg .gt_font_bold {
 font-weight: bold;
 }
-#kcikaqulty .gt_font_italic {
+#tqmvkpetsg .gt_font_italic {
 font-style: italic;
 }
-#kcikaqulty .gt_super {
+#tqmvkpetsg .gt_super {
 font-size: 65%;
 }
-#kcikaqulty .gt_footnote_marks {
+#tqmvkpetsg .gt_footnote_marks {
 font-size: 75%;
 vertical-align: 0.4em;
 position: initial;
 }
-#kcikaqulty .gt_asterisk {
+#tqmvkpetsg .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#kcikaqulty .gt_indent_1 {
+#tqmvkpetsg .gt_indent_1 {
 text-indent: 5px;
 }
-#kcikaqulty .gt_indent_2 {
+#tqmvkpetsg .gt_indent_2 {
 text-indent: 10px;
 }
-#kcikaqulty .gt_indent_3 {
+#tqmvkpetsg .gt_indent_3 {
 text-indent: 15px;
 }
-#kcikaqulty .gt_indent_4 {
+#tqmvkpetsg .gt_indent_4 {
 text-indent: 20px;
 }
-#kcikaqulty .gt_indent_5 {
+#tqmvkpetsg .gt_indent_5 {
 text-indent: 25px;
 }
-#kcikaqulty .katex-display {
+#tqmvkpetsg .katex-display {
 display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
-#kcikaqulty div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#tqmvkpetsg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
@@ -2893,7 +2821,8 @@ height: 0px !important;
 </figure>
 </div>
 </div>
-<p><strong>Interpretation.</strong> [WRITE 2–3 SENTENCES. What would you put in a paper?]</p>
+<p><strong>Interpretation.</strong> For this question, I excluded the independent and categorical variables (T_op, RH, Sex, Subject, Experiment), because I don’t think a statistical analysis of these alone provides any insights about the research. The PMV and PPD were directly calculated from the independent variables, so their distribution is also not particularly helpful.</p>
+<p>For the measured data collected (thermal acceptability, comfort, and sensation), we see a broad distribution within their ranges, with the mimimum/maximum values close to the extremes on the scales. The mean and median values are similar to each other (indicating the data may be normally distributed). The mean/median for TS and TA fall near the ‘neutral’ condition of 0, but the mean/median for TC is around 2 (slightly uncomfortable). This is an interesting incongruence in the data: if only the mean for TS/TA was near 0, I would guess that most occupants were always uncomfortably cold or hot with an even spread averaging out to 0. However, since the median is also near 0, perhaps it’s due to the nature of the survey design and how occupants interact with the questions.</p>
 </section>
 <section id="histograms-of-tc-and-ts" class="level2">
 <h2 class="anchored" data-anchor-id="histograms-of-tc-and-ts">2. Histograms of TC and TS</h2>
@@ -2935,7 +2864,7 @@ Figure 1: Histograms
 </div>
 </div>
 </div>
-<p><strong>Interpretation.</strong> [WRITE 2–3 SENTENCES] i have simplified to single vote count rather than continuous scale</p>
+<p><strong>Interpretation.</strong> While data for TC and TS were collected on a continuous scale, I have simplified the bins on the histograms to single vote counts for clearer interpretation. The histograms help clarify the previous summary: TS does look mostly normally distributed, but TC is skewed toward lower values. The TS data also largely agrees with the TC data: most people did not experience extreme thermal sensations (±3/4 bars are small) and thus were not extremely uncomfortable.</p>
 </section>
 <section id="boxplots-of-ts-vs-sex-subject-and-experiment" class="level2">
 <h2 class="anchored" data-anchor-id="boxplots-of-ts-vs-sex-subject-and-experiment">3. Boxplots of TS vs Sex, Subject and Experiment</h2>
@@ -2956,8 +2885,7 @@ Figure 1: Histograms
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt_q3 <span class="ot">=</span> (plt_q3_sex <span class="sc">+</span> plt_q3_experiment) <span class="sc">/</span> plt_q3_subject</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt_q3</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q3_boxplots.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co"># The Subject one is the least obvious and the most informative — look at it carefully.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q3_boxplots.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-q3" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -2972,26 +2900,26 @@ Figure 2: Box plots
 </div>
 </div>
 </div>
-<p><strong>Interpretation.</strong> [WRITE 2–3 SENTENCES]</p>
+<p><strong>Interpretation.</strong> Thermal sensation does not seem to vary significantly by sex, but has a broad distribution across the experiments and subjects. It makes sense that the thermal sensation generally increases as the experimental operative temperatures were increased from A-F; we can also infer that relative humidity seems to have a much smaller impact than temperature, because the C &amp; D and E &amp; F box plots are very similar. Most subjects have median TS close to 0 with two notable exceptions (16 and 19) who also reported some of the largest ranges. There are only two outlier points (as <code>ggplot</code> defines them, values more than 1.5xIQR from the 1st &amp; 3rd quartiles), with agrees with the previous charts in that most people don’t experience extreme thermal sensations.</p>
 </section>
 <section id="correlation-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="correlation-matrix">4. Correlation matrix</h2>
-<p>Variables: PMV, PPD, RH, TA, TC, TS, Top.</p>
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt_q4 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(T_op, RH, TS, TC, TA, PMV, PPD) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggcorrplot</span>(<span class="at">type =</span> <span class="st">&quot;lower&quot;</span>, <span class="at">outline.color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Correlation</span><span class="sc">\n</span><span class="st">coefficient&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;#4c59ea&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#ea544c&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;inside&quot;</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>), <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">&quot;#e0e0e0&quot;</span>),</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>))</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt_q4</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q4_correlation-matrix.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables: PMV, PPD, RH, TA, TC, TS, Top.</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt_q4 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(T_op, RH, TS, TC, TA, PMV, PPD) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggcorrplot</span>(<span class="at">type =</span> <span class="st">&quot;lower&quot;</span>, <span class="at">outline.color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Correlation</span><span class="sc">\n</span><span class="st">coefficient&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;#4c59ea&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#ea544c&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;inside&quot;</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>), <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">&quot;#e0e0e0&quot;</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt_q4</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q4_correlation-matrix.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div id="fig-q4" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -3206,7 +3134,7 @@ Figure 7: Linear regression
 <img role="img" src="data:image/png;base64,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" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-q7_validity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 8: Linear regression validity
+Figure 8: Linear regression diagnostics
 </figcaption>
 </figure>
 </div>
@@ -3220,7 +3148,7 @@ Figure 8: Linear regression validity
 <div class="cell">
 <details open class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [WRITE YOUR CODE]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># could be interesting - do ppl tend to stay on an extreme? if someone is hot at the start are they near the hottest at the end</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p><strong>Interpretation.</strong> [WRITE 2–3 SENTENCES — the take-away message you would put in a paper.]</p>
@@ -3781,345 +3709,324 @@ loaded via a namespace (and not attached):
 <span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">=</span> <span class="fu">tibble</span>(d) <span class="sc">|&gt;</span></span>
 <span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(<span class="at">T_op =</span> Top) <span class="sc">|&gt;</span> <span class="co"># for clarity</span></span>
 <span id="cb16-49"><a href="#cb16-49" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">Subject =</span> <span class="fu">factor</span>(Subject, <span class="at">levels =</span> <span class="fu">as.character</span>(<span class="fu">sort</span>(<span class="fu">as.numeric</span>(<span class="fu">levels</span>(Subject)))))) <span class="sc">|&gt;</span> <span class="co"># relevel so it&#39;s sorted numerically, but kept as character for plotting</span></span>
-<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(Experiment <span class="sc">!=</span> <span class="st">&quot;P&quot;</span>) <span class="co"># explain why</span></span>
+<span id="cb16-50"><a href="#cb16-50" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(Experiment <span class="sc">!=</span> <span class="st">&quot;P&quot;</span>) <span class="co"># because this was not a real test condition</span></span>
 <span id="cb16-51"><a href="#cb16-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-52"><a href="#cb16-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## About this dataset — read before you start</span></span>
+<span id="cb16-53"><a href="#cb16-53" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Statistical summary of all variables</span></span>
 <span id="cb16-54"><a href="#cb16-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a>Thirty subjects each sat through seven conditions in a climate chamber in</span>
-<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a>Guangzhou, giving 30 × 7 = 210 rows.</span>
+<span id="cb16-55"><a href="#cb16-55" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-q1}</span></span>
+<span id="cb16-56"><a href="#cb16-56" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: &quot;Statistical summary&quot;</span></span>
 <span id="cb16-57"><a href="#cb16-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Variable <span class="pp">|</span> Meaning <span class="pp">|</span> Notes <span class="pp">|</span></span>
-<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|</span></span>
-<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Top`</span> <span class="pp">|</span> Operative temperature, °C <span class="pp">|</span> Equals air temperature here (MRT = Ta) <span class="pp">|</span></span>
-<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`RH`</span> <span class="pp">|</span> Relative humidity, % <span class="pp">|</span> Two levels: 50 and 70 <span class="pp">|</span></span>
-<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Sex`</span> <span class="pp">|</span> F / M <span class="pp">|</span> 15 subjects each <span class="pp">|</span></span>
-<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Subject`</span> <span class="pp">|</span> Subject ID, 1–30 <span class="pp">|</span> Each ID appears 7 times<span class="pp">|</span></span>
-<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TS`</span> <span class="pp">|</span> Thermal sensation <span class="pp">|</span> ASHRAE scale, −4 cold … 0 neutral … +4 hot <span class="pp">|</span></span>
-<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TC`</span> <span class="pp">|</span> Thermal discomfort <span class="pp">|</span> 0 = very comfortable … 4 = very uncomfortable <span class="pp">|</span></span>
-<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`TA`</span> <span class="pp">|</span> Thermal acceptability <span class="pp">|</span> Higher = more acceptable <span class="pp">|</span></span>
-<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PMV`</span> <span class="pp">|</span> Predicted mean vote <span class="pp">|</span> Calculated from the design conditions <span class="pp">|</span></span>
-<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`PPD`</span> <span class="pp">|</span> Predicted % dissatisfied <span class="pp">|</span> Calculated from PMV <span class="pp">|</span></span>
-<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="in">`Experiment`</span> <span class="pp">|</span> Condition A–F, plus P <span class="pp">|</span> P is pre-conditioning, not a test condition <span class="pp">|</span></span>
-<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1. Statistical summary of all variables</span></span>
+<span id="cb16-58"><a href="#cb16-58" aria-hidden="true" tabindex="-1"></a>summarize_variable <span class="ot">=</span> <span class="cf">function</span>(df, variable) {</span>
+<span id="cb16-59"><a href="#cb16-59" aria-hidden="true" tabindex="-1"></a>   df <span class="sc">|&gt;</span></span>
+<span id="cb16-60"><a href="#cb16-60" aria-hidden="true" tabindex="-1"></a>      <span class="co"># select(.data[[variable]]) |&gt;</span></span>
+<span id="cb16-61"><a href="#cb16-61" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(</span>
+<span id="cb16-62"><a href="#cb16-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">Minimum =</span> <span class="fu">min</span>(.data[[variable]]),</span>
+<span id="cb16-63"><a href="#cb16-63" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">25th Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(.data[[variable]], <span class="fl">0.25</span>),</span>
+<span id="cb16-64"><a href="#cb16-64" aria-hidden="true" tabindex="-1"></a>         <span class="at">Median =</span> <span class="fu">median</span>(.data[[variable]]),</span>
+<span id="cb16-65"><a href="#cb16-65" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">75th Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(.data[[variable]], <span class="fl">0.75</span>),</span>
+<span id="cb16-66"><a href="#cb16-66" aria-hidden="true" tabindex="-1"></a>         <span class="at">Maximum =</span> <span class="fu">max</span>(.data[[variable]]),</span>
+<span id="cb16-67"><a href="#cb16-67" aria-hidden="true" tabindex="-1"></a>         <span class="at">Mean =</span> <span class="fu">mean</span>(.data[[variable]]),</span>
+<span id="cb16-68"><a href="#cb16-68" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Standard Deviation</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sd</span>(.data[[variable]])</span>
+<span id="cb16-69"><a href="#cb16-69" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
+<span id="cb16-70"><a href="#cb16-70" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">variable =</span> variable)</span>
+<span id="cb16-71"><a href="#cb16-71" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb16-72"><a href="#cb16-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r tbl-q1}</span></span>
-<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: &quot;Statistical summary&quot;</span></span>
+<span id="cb16-73"><a href="#cb16-73" aria-hidden="true" tabindex="-1"></a>summary_results <span class="ot">=</span> <span class="fu">tibble</span>()</span>
+<span id="cb16-74"><a href="#cb16-74" aria-hidden="true" tabindex="-1"></a>variables <span class="ot">=</span> <span class="fu">names</span>(dat)[<span class="dv">5</span><span class="sc">:</span><span class="dv">9</span>]</span>
 <span id="cb16-75"><a href="#cb16-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a>summarize_variable <span class="ot">=</span> <span class="cf">function</span>(df, variable) {</span>
-<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>   df <span class="sc">|&gt;</span></span>
-<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>      <span class="co"># select(.data[[variable]]) |&gt;</span></span>
-<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(</span>
-<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>         <span class="at">Minimum =</span> <span class="fu">min</span>(.data[[variable]]),</span>
-<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">25th Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(.data[[variable]], <span class="fl">0.25</span>),</span>
-<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>         <span class="at">Median =</span> <span class="fu">median</span>(.data[[variable]]),</span>
-<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">75th Quartile</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">quantile</span>(.data[[variable]], <span class="fl">0.75</span>),</span>
-<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>         <span class="at">Maximum =</span> <span class="fu">max</span>(.data[[variable]]),</span>
-<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>         <span class="at">Mean =</span> <span class="fu">mean</span>(.data[[variable]]),</span>
-<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Standard Deviation</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">sd</span>(.data[[variable]])</span>
-<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>      ) <span class="sc">|&gt;</span></span>
-<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>      <span class="fu">mutate</span>(<span class="at">variable =</span> variable)</span>
-<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-76"><a href="#cb16-76" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> variables) {</span>
+<span id="cb16-77"><a href="#cb16-77" aria-hidden="true" tabindex="-1"></a>   summary_results <span class="ot">=</span> <span class="fu">rbind</span>(summary_results, <span class="fu">summarize_variable</span>(dat, var))</span>
+<span id="cb16-78"><a href="#cb16-78" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-79"><a href="#cb16-79" aria-hidden="true" tabindex="-1"></a>tbl_q1 <span class="ot">=</span> summary_results <span class="sc">|&gt;</span></span>
+<span id="cb16-80"><a href="#cb16-80" aria-hidden="true" tabindex="-1"></a>   <span class="fu">relocate</span>(variable) <span class="sc">|&gt;</span></span>
+<span id="cb16-81"><a href="#cb16-81" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-82"><a href="#cb16-82" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TS&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>,</span>
+<span id="cb16-83"><a href="#cb16-83" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TC&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Comfort (TC)&quot;</span>,</span>
+<span id="cb16-84"><a href="#cb16-84" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TA&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Acceptability (TA)&quot;</span>,</span>
+<span id="cb16-85"><a href="#cb16-85" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;PMV&quot;</span> <span class="sc">~</span> <span class="st">&quot;Predicted Mean Vote (PMV)&quot;</span>,</span>
+<span id="cb16-86"><a href="#cb16-86" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;PPD&quot;</span> <span class="sc">~</span> <span class="st">&quot;Percentage People Dissatisfied (PPD)&quot;</span>,</span>
+<span id="cb16-87"><a href="#cb16-87" aria-hidden="true" tabindex="-1"></a>   )) <span class="sc">|&gt;</span></span>
+<span id="cb16-88"><a href="#cb16-88" aria-hidden="true" tabindex="-1"></a>   <span class="fu">gt</span>(<span class="at">rowname_col =</span> <span class="st">&quot;variable&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-89"><a href="#cb16-89" aria-hidden="true" tabindex="-1"></a>   <span class="fu">fmt_number</span>()</span>
 <span id="cb16-90"><a href="#cb16-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>summary_results <span class="ot">=</span> <span class="fu">tibble</span>()</span>
-<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a>variables <span class="ot">=</span> <span class="fu">names</span>(dat)[<span class="dv">5</span><span class="sc">:</span><span class="dv">9</span>]</span>
-<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> variables) {</span>
-<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>   summary_results <span class="ot">=</span> <span class="fu">rbind</span>(summary_results, <span class="fu">summarize_variable</span>(dat, var))</span>
-<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a>tbl_q1 <span class="ot">=</span> summary_results <span class="sc">|&gt;</span></span>
-<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>   <span class="fu">relocate</span>(variable) <span class="sc">|&gt;</span></span>
-<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">case_when</span>(</span>
-<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TS&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>,</span>
-<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TC&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Comfort (TC)&quot;</span>,</span>
-<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TA&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Acceptability (TA)&quot;</span>,</span>
-<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;PMV&quot;</span> <span class="sc">~</span> <span class="st">&quot;Predicted Mean Vote (PMV)&quot;</span>,</span>
-<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;PPD&quot;</span> <span class="sc">~</span> <span class="st">&quot;Percentage People Dissatisfied (PPD)&quot;</span>,</span>
-<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a>   )) <span class="sc">|&gt;</span></span>
-<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a>   <span class="fu">gt</span>(<span class="at">rowname_col =</span> <span class="st">&quot;variable&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>   <span class="fu">fmt_number</span>()</span>
-<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>tbl_q1</span>
-<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(tbl_q1, <span class="st">&quot;output/q1_statistical-summary.html&quot;</span>)</span>
-<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a><span class="co"># Think: does a mean make sense for a factor? For a design variable like Top?</span></span>
-<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES. What would you put in a paper?</span><span class="co">]</span></span>
-<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Histograms of TC and TS</span></span>
-<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q2}</span></span>
-<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Histograms&quot;</span></span>
-<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3</span></span>
-<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>plt_q2 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(TC, TS) <span class="sc">|&gt;</span></span>
-<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>   <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(TC, TS), <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">case_when</span>(</span>
-<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TS&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>,</span>
-<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TC&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Comfort (TC)&quot;</span>)</span>
-<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
-<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(value)) <span class="sc">+</span></span>
-<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> cal_palette2[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Vote&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of votes&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
-<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facetted_pos_scales</span>(</span>
-<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">list</span>(</span>
-<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult=</span><span class="fl">0.2</span>)),</span>
-<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>))</span>
-<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>plt_q2</span>
-<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q2_histograms.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES</span><span class="co">]</span></span>
-<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a>i have simplified to single vote count rather than continuous scale</span>
-<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Boxplots of TS vs Sex, Subject and Experiment</span></span>
+<span id="cb16-91"><a href="#cb16-91" aria-hidden="true" tabindex="-1"></a>tbl_q1</span>
+<span id="cb16-92"><a href="#cb16-92" aria-hidden="true" tabindex="-1"></a><span class="fu">gtsave</span>(tbl_q1, <span class="st">&quot;output/q1_statistical-summary.html&quot;</span>)</span>
+<span id="cb16-93"><a href="#cb16-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-94"><a href="#cb16-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-95"><a href="#cb16-95" aria-hidden="true" tabindex="-1"></a>**Interpretation.**</span>
+<span id="cb16-96"><a href="#cb16-96" aria-hidden="true" tabindex="-1"></a>For this question, I excluded the independent and categorical variables (T_op, RH, Sex, Subject, Experiment), because I don&#39;t think a statistical analysis of these alone provides any insights about the research. The PMV and PPD were directly calculated from the independent variables, so their distribution is also not particularly helpful.</span>
+<span id="cb16-97"><a href="#cb16-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-98"><a href="#cb16-98" aria-hidden="true" tabindex="-1"></a>For the measured data collected (thermal acceptability, comfort, and sensation), we see a broad distribution within their ranges, with the mimimum/maximum values close to the extremes on the scales. The mean and median values are similar to each other (indicating the data may be normally distributed). The mean/median for TS and TA fall near the &#39;neutral&#39; condition of 0, but the mean/median for TC is around 2 (slightly uncomfortable). This is an interesting incongruence in the data: if only the mean for TS/TA was near 0, I would guess that most occupants were always uncomfortably cold or hot with an even spread averaging out to 0. However, since the median is also near 0, perhaps it&#39;s due to the nature of the survey design and how occupants interact with the questions.</span>
+<span id="cb16-99"><a href="#cb16-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-100"><a href="#cb16-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## 2. Histograms of TC and TS</span></span>
+<span id="cb16-101"><a href="#cb16-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-102"><a href="#cb16-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q2}</span></span>
+<span id="cb16-103"><a href="#cb16-103" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Histograms&quot;</span></span>
+<span id="cb16-104"><a href="#cb16-104" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb16-105"><a href="#cb16-105" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 3</span></span>
+<span id="cb16-106"><a href="#cb16-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-107"><a href="#cb16-107" aria-hidden="true" tabindex="-1"></a>plt_q2 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb16-108"><a href="#cb16-108" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(TC, TS) <span class="sc">|&gt;</span></span>
+<span id="cb16-109"><a href="#cb16-109" aria-hidden="true" tabindex="-1"></a>   <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(TC, TS), <span class="at">names_to =</span> <span class="st">&quot;variable&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-110"><a href="#cb16-110" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">variable =</span> <span class="fu">case_when</span>(</span>
+<span id="cb16-111"><a href="#cb16-111" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TS&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>,</span>
+<span id="cb16-112"><a href="#cb16-112" aria-hidden="true" tabindex="-1"></a>      variable <span class="sc">==</span> <span class="st">&quot;TC&quot;</span> <span class="sc">~</span> <span class="st">&quot;Thermal Comfort (TC)&quot;</span>)</span>
+<span id="cb16-113"><a href="#cb16-113" aria-hidden="true" tabindex="-1"></a>   ) <span class="sc">|&gt;</span></span>
+<span id="cb16-114"><a href="#cb16-114" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(value)) <span class="sc">+</span></span>
+<span id="cb16-115"><a href="#cb16-115" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">fill =</span> cal_palette2[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb16-116"><a href="#cb16-116" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Vote&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Number of votes&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-117"><a href="#cb16-117" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="dv">20</span>)) <span class="sc">+</span></span>
+<span id="cb16-118"><a href="#cb16-118" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_wrap</span>(<span class="sc">~</span> variable, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-119"><a href="#cb16-119" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facetted_pos_scales</span>(</span>
+<span id="cb16-120"><a href="#cb16-120" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="fu">list</span>(</span>
+<span id="cb16-121"><a href="#cb16-121" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>), <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult=</span><span class="fl">0.2</span>)),</span>
+<span id="cb16-122"><a href="#cb16-122" aria-hidden="true" tabindex="-1"></a>            <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>))</span>
+<span id="cb16-123"><a href="#cb16-123" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb16-124"><a href="#cb16-124" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb16-125"><a href="#cb16-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-126"><a href="#cb16-126" aria-hidden="true" tabindex="-1"></a>plt_q2</span>
+<span id="cb16-127"><a href="#cb16-127" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q2_histograms.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">3</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-128"><a href="#cb16-128" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-129"><a href="#cb16-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-130"><a href="#cb16-130" aria-hidden="true" tabindex="-1"></a>**Interpretation.**</span>
+<span id="cb16-131"><a href="#cb16-131" aria-hidden="true" tabindex="-1"></a>While data for TC and TS were collected on a continuous scale, I have simplified the bins on the histograms to single vote counts for clearer interpretation. The histograms help clarify the previous summary: TS does look mostly normally distributed, but TC is skewed toward lower values. The TS data also largely agrees with the TC data: most people did not experience extreme thermal sensations (±3/4 bars are small) and thus were not extremely uncomfortable.</span>
+<span id="cb16-132"><a href="#cb16-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-133"><a href="#cb16-133" aria-hidden="true" tabindex="-1"></a><span class="fu">## 3. Boxplots of TS vs Sex, Subject and Experiment</span></span>
+<span id="cb16-134"><a href="#cb16-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-135"><a href="#cb16-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q3}</span></span>
+<span id="cb16-136"><a href="#cb16-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Box plots&quot;</span></span>
+<span id="cb16-137"><a href="#cb16-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb16-138"><a href="#cb16-138" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
+<span id="cb16-139"><a href="#cb16-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-140"><a href="#cb16-140" aria-hidden="true" tabindex="-1"></a>q3_boxplot <span class="ot">=</span> <span class="cf">function</span>(df, var) {</span>
+<span id="cb16-141"><a href="#cb16-141" aria-hidden="true" tabindex="-1"></a>   df <span class="sc">|&gt;</span></span>
+<span id="cb16-142"><a href="#cb16-142" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-143"><a href="#cb16-143" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(.data[[var]], TS)) <span class="sc">+</span></span>
+<span id="cb16-144"><a href="#cb16-144" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-145"><a href="#cb16-145" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb16-146"><a href="#cb16-146" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-147"><a href="#cb16-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-148"><a href="#cb16-148" aria-hidden="true" tabindex="-1"></a>plt_q3_sex <span class="ot">=</span> <span class="fu">q3_boxplot</span>(dat, <span class="st">&quot;Sex&quot;</span>)</span>
+<span id="cb16-149"><a href="#cb16-149" aria-hidden="true" tabindex="-1"></a>plt_q3_subject <span class="ot">=</span> <span class="fu">q3_boxplot</span>(dat, <span class="st">&quot;Subject&quot;</span>)</span>
+<span id="cb16-150"><a href="#cb16-150" aria-hidden="true" tabindex="-1"></a>plt_q3_experiment <span class="ot">=</span> <span class="fu">q3_boxplot</span>(dat, <span class="st">&quot;Experiment&quot;</span>)</span>
+<span id="cb16-151"><a href="#cb16-151" aria-hidden="true" tabindex="-1"></a>plt_q3 <span class="ot">=</span> (plt_q3_sex <span class="sc">+</span> plt_q3_experiment) <span class="sc">/</span> plt_q3_subject</span>
 <span id="cb16-152"><a href="#cb16-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q3}</span></span>
-<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Box plots&quot;</span></span>
-<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a>q3_boxplot <span class="ot">=</span> <span class="cf">function</span>(df, var) {</span>
-<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a>   df <span class="sc">|&gt;</span></span>
-<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(.data[[var]], TS)) <span class="sc">+</span></span>
-<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>))</span>
-<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-153"><a href="#cb16-153" aria-hidden="true" tabindex="-1"></a>plt_q3</span>
+<span id="cb16-154"><a href="#cb16-154" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q3_boxplots.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-155"><a href="#cb16-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-156"><a href="#cb16-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-157"><a href="#cb16-157" aria-hidden="true" tabindex="-1"></a>**Interpretation.** Thermal sensation does not seem to vary significantly by sex, but has a broad distribution across the experiments and subjects. It makes sense that the thermal sensation generally increases as the experimental operative temperatures were increased from A-F; we can also infer that relative humidity seems to have a much smaller impact than temperature, because the C &amp; D and E &amp; F box plots are very similar. Most subjects have median TS close to 0 with two notable exceptions (16 and 19) who also reported some of the largest ranges. There are only two outlier points (as <span class="in">`ggplot`</span> defines them, values more than 1.5xIQR from the 1st &amp; 3rd quartiles), with agrees with the previous charts in that most people don&#39;t experience extreme thermal sensations.</span>
+<span id="cb16-158"><a href="#cb16-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-159"><a href="#cb16-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Correlation matrix</span></span>
+<span id="cb16-160"><a href="#cb16-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-161"><a href="#cb16-161" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q4}</span></span>
+<span id="cb16-162"><a href="#cb16-162" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Correlation matrix&quot;</span></span>
+<span id="cb16-163"><a href="#cb16-163" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb16-164"><a href="#cb16-164" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
 <span id="cb16-165"><a href="#cb16-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a>plt_q3_sex <span class="ot">=</span> <span class="fu">q3_boxplot</span>(dat, <span class="st">&quot;Sex&quot;</span>)</span>
-<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>plt_q3_subject <span class="ot">=</span> <span class="fu">q3_boxplot</span>(dat, <span class="st">&quot;Subject&quot;</span>)</span>
-<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>plt_q3_experiment <span class="ot">=</span> <span class="fu">q3_boxplot</span>(dat, <span class="st">&quot;Experiment&quot;</span>)</span>
-<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>plt_q3 <span class="ot">=</span> (plt_q3_sex <span class="sc">+</span> plt_q3_experiment) <span class="sc">/</span> plt_q3_subject</span>
-<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>plt_q3</span>
-<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q3_boxplots.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a><span class="co"># The Subject one is the least obvious and the most informative — look at it carefully.</span></span>
-<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES</span><span class="co">]</span></span>
-<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="fu">## 4. Correlation matrix</span></span>
+<span id="cb16-166"><a href="#cb16-166" aria-hidden="true" tabindex="-1"></a><span class="co"># Variables: PMV, PPD, RH, TA, TC, TS, Top.</span></span>
+<span id="cb16-167"><a href="#cb16-167" aria-hidden="true" tabindex="-1"></a>plt_q4 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb16-168"><a href="#cb16-168" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(T_op, RH, TS, TC, TA, PMV, PPD) <span class="sc">|&gt;</span></span>
+<span id="cb16-169"><a href="#cb16-169" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-170"><a href="#cb16-170" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggcorrplot</span>(<span class="at">type =</span> <span class="st">&quot;lower&quot;</span>, <span class="at">outline.color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb16-171"><a href="#cb16-171" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Correlation</span><span class="sc">\n</span><span class="st">coefficient&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-172"><a href="#cb16-172" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;#4c59ea&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#ea544c&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-173"><a href="#cb16-173" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-174"><a href="#cb16-174" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;inside&quot;</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>), <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">&quot;#e0e0e0&quot;</span>),</span>
+<span id="cb16-175"><a href="#cb16-175" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>))</span>
+<span id="cb16-176"><a href="#cb16-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-177"><a href="#cb16-177" aria-hidden="true" tabindex="-1"></a>plt_q4</span>
+<span id="cb16-178"><a href="#cb16-178" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q4_correlation-matrix.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-179"><a href="#cb16-179" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb16-180"><a href="#cb16-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a>Variables: PMV, PPD, RH, TA, TC, TS, Top.</span>
-<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q4}</span></span>
-<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Correlation matrix&quot;</span></span>
-<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 6</span></span>
-<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a>plt_q4 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(T_op, RH, TS, TC, TA, PMV, PPD) <span class="sc">|&gt;</span></span>
-<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
-<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggcorrplot</span>(<span class="at">type =</span> <span class="st">&quot;lower&quot;</span>, <span class="at">outline.color =</span> <span class="st">&quot;black&quot;</span>, <span class="at">lab =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
-<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;&quot;</span>, <span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">fill =</span> <span class="st">&quot;Correlation</span><span class="sc">\n</span><span class="st">coefficient&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_gradient2</span>(<span class="at">low =</span> <span class="st">&quot;#4c59ea&quot;</span>, <span class="at">high =</span> <span class="st">&quot;#ea544c&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a>      <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;inside&quot;</span>, <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>), <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">colour =</span> <span class="st">&quot;#e0e0e0&quot;</span>),</span>
-<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a>         <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>))</span>
-<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>plt_q4</span>
-<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q4_correlation-matrix.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q4_high-corr}</span></span>
-<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Correlation matrix&quot;</span></span>
-<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(T_op, PMV))</span>
-<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a>PMV/PPD were directly calculated from the environmental conditions.(it just so happens that PMV is directly proportional to T_op - check?)</span>
-<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES</span><span class="co">]</span></span>
-<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a>Two of these correlations are strange. One pair is r = 1.00, and another pair</span>
-<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a>is deterministically related yet shows a weak r. Find them, plot them, and</span>
-<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a>explain what happened.</span>
-<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Normality of TC and TS</span></span>
-<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q5}</span></span>
-<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Normality&quot;</span></span>
-<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a>q5_qqplot <span class="ot">=</span> <span class="cf">function</span>(df, var, varlabel, axlim) {</span>
-<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>   p_val <span class="ot">=</span> <span class="fu">shapiro.test</span>(df[[var]])<span class="sc">$</span>p.value</span>
-<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a>   p_val <span class="ot">=</span> <span class="fu">signif</span>(p_val, <span class="at">digits =</span> <span class="dv">2</span>)</span>
-<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a>   df <span class="sc">|&gt;</span></span>
-<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .data[[var]])) <span class="sc">+</span></span>
-<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a>         <span class="fu">stat_qq</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a>         <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a>         <span class="fu">labs</span>(<span class="at">title =</span> varlabel, <span class="at">y =</span> <span class="st">&quot;Sample&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Theoretical&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a>         <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> axlim) <span class="sc">+</span></span>
-<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a>         <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> axlim) <span class="sc">+</span></span>
-<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>         <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">label =</span> <span class="fu">str_c</span>(<span class="st">&quot;p-value: &quot;</span>, p_val))</span>
-<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a>plt_q5_TC <span class="ot">=</span> <span class="fu">q5_qqplot</span>(dat, <span class="st">&quot;TC&quot;</span>, <span class="st">&quot;Thermal Comfort (TC)&quot;</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
-<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>plt_q5_TS <span class="ot">=</span> <span class="fu">q5_qqplot</span>(dat, <span class="st">&quot;TS&quot;</span>, <span class="st">&quot;Thermal Sensation (TS)&quot;</span>, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>))</span>
-<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>plt_q5 <span class="ot">=</span> plt_q5_TC <span class="sc">+</span> plt_q5_TS</span>
-<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q5_normality.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>plt_q5</span>
-<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES. Are they normal? Does it matter, and for what?</span><span class="co">]</span></span>
-<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-181"><a href="#cb16-181" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q4_high-corr}</span></span>
+<span id="cb16-182"><a href="#cb16-182" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Correlation matrix&quot;</span></span>
+<span id="cb16-183"><a href="#cb16-183" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb16-184"><a href="#cb16-184" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb16-185"><a href="#cb16-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-186"><a href="#cb16-186" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb16-187"><a href="#cb16-187" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-188"><a href="#cb16-188" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>(<span class="fu">aes</span>(T_op, PMV))</span>
+<span id="cb16-189"><a href="#cb16-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-190"><a href="#cb16-190" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-191"><a href="#cb16-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-192"><a href="#cb16-192" aria-hidden="true" tabindex="-1"></a>PMV/PPD were directly calculated from the environmental conditions.(it just so happens that PMV is directly proportional to T_op - check?)</span>
+<span id="cb16-193"><a href="#cb16-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-194"><a href="#cb16-194" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES</span><span class="co">]</span></span>
+<span id="cb16-195"><a href="#cb16-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-196"><a href="#cb16-196" aria-hidden="true" tabindex="-1"></a>Two of these correlations are strange. One pair is r = 1.00, and another pair</span>
+<span id="cb16-197"><a href="#cb16-197" aria-hidden="true" tabindex="-1"></a>is deterministically related yet shows a weak r. Find them, plot them, and</span>
+<span id="cb16-198"><a href="#cb16-198" aria-hidden="true" tabindex="-1"></a>explain what happened.</span>
+<span id="cb16-199"><a href="#cb16-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-200"><a href="#cb16-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-201"><a href="#cb16-201" aria-hidden="true" tabindex="-1"></a><span class="fu">## 5. Normality of TC and TS</span></span>
+<span id="cb16-202"><a href="#cb16-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-203"><a href="#cb16-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q5}</span></span>
+<span id="cb16-204"><a href="#cb16-204" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Normality&quot;</span></span>
+<span id="cb16-205"><a href="#cb16-205" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb16-206"><a href="#cb16-206" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb16-207"><a href="#cb16-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-208"><a href="#cb16-208" aria-hidden="true" tabindex="-1"></a>q5_qqplot <span class="ot">=</span> <span class="cf">function</span>(df, var, varlabel, axlim) {</span>
+<span id="cb16-209"><a href="#cb16-209" aria-hidden="true" tabindex="-1"></a>   p_val <span class="ot">=</span> <span class="fu">shapiro.test</span>(df[[var]])<span class="sc">$</span>p.value</span>
+<span id="cb16-210"><a href="#cb16-210" aria-hidden="true" tabindex="-1"></a>   p_val <span class="ot">=</span> <span class="fu">signif</span>(p_val, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb16-211"><a href="#cb16-211" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb16-212"><a href="#cb16-212" aria-hidden="true" tabindex="-1"></a>   df <span class="sc">|&gt;</span></span>
+<span id="cb16-213"><a href="#cb16-213" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> .data[[var]])) <span class="sc">+</span></span>
+<span id="cb16-214"><a href="#cb16-214" aria-hidden="true" tabindex="-1"></a>         <span class="fu">stat_qq</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb16-215"><a href="#cb16-215" aria-hidden="true" tabindex="-1"></a>         <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-216"><a href="#cb16-216" aria-hidden="true" tabindex="-1"></a>         <span class="fu">labs</span>(<span class="at">title =</span> varlabel, <span class="at">y =</span> <span class="st">&quot;Sample&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Theoretical&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-217"><a href="#cb16-217" aria-hidden="true" tabindex="-1"></a>         <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> axlim) <span class="sc">+</span></span>
+<span id="cb16-218"><a href="#cb16-218" aria-hidden="true" tabindex="-1"></a>         <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> axlim) <span class="sc">+</span></span>
+<span id="cb16-219"><a href="#cb16-219" aria-hidden="true" tabindex="-1"></a>         <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">label =</span> <span class="fu">str_c</span>(<span class="st">&quot;p-value: &quot;</span>, p_val))</span>
+<span id="cb16-220"><a href="#cb16-220" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-221"><a href="#cb16-221" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb16-222"><a href="#cb16-222" aria-hidden="true" tabindex="-1"></a>plt_q5_TC <span class="ot">=</span> <span class="fu">q5_qqplot</span>(dat, <span class="st">&quot;TC&quot;</span>, <span class="st">&quot;Thermal Comfort (TC)&quot;</span>, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>))</span>
+<span id="cb16-223"><a href="#cb16-223" aria-hidden="true" tabindex="-1"></a>plt_q5_TS <span class="ot">=</span> <span class="fu">q5_qqplot</span>(dat, <span class="st">&quot;TS&quot;</span>, <span class="st">&quot;Thermal Sensation (TS)&quot;</span>, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb16-224"><a href="#cb16-224" aria-hidden="true" tabindex="-1"></a>plt_q5 <span class="ot">=</span> plt_q5_TC <span class="sc">+</span> plt_q5_TS</span>
+<span id="cb16-225"><a href="#cb16-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-226"><a href="#cb16-226" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q5_normality.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-227"><a href="#cb16-227" aria-hidden="true" tabindex="-1"></a>plt_q5</span>
+<span id="cb16-228"><a href="#cb16-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-229"><a href="#cb16-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-230"><a href="#cb16-230" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES. Are they normal? Does it matter, and for what?</span><span class="co">]</span></span>
+<span id="cb16-231"><a href="#cb16-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-232"><a href="#cb16-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-233"><a href="#cb16-233" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Does Sex significantly influence TS?</span></span>
+<span id="cb16-234"><a href="#cb16-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-235"><a href="#cb16-235" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q6}</span></span>
+<span id="cb16-236"><a href="#cb16-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Statistical difference&quot;</span></span>
+<span id="cb16-237"><a href="#cb16-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb16-238"><a href="#cb16-238" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb16-239"><a href="#cb16-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-240"><a href="#cb16-240" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> dat <span class="sc">|&gt;</span> <span class="fu">t_test</span>(TS <span class="sc">~</span> Sex)</span>
+<span id="cb16-241"><a href="#cb16-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-242"><a href="#cb16-242" aria-hidden="true" tabindex="-1"></a>anova <span class="ot">=</span> dat <span class="sc">|&gt;</span> <span class="fu">anova_test</span>(TS <span class="sc">~</span> Sex)</span>
+<span id="cb16-243"><a href="#cb16-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-244"><a href="#cb16-244" aria-hidden="true" tabindex="-1"></a>subtitle <span class="ot">=</span> <span class="fu">str_c</span>(</span>
+<span id="cb16-245"><a href="#cb16-245" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Two groups of TS observations: M and F</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb16-246"><a href="#cb16-246" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Welch&#39;s t-test p-value: &quot;</span>,</span>
+<span id="cb16-247"><a href="#cb16-247" aria-hidden="true" tabindex="-1"></a>   <span class="fu">signif</span>(t<span class="sc">$</span>p, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
+<span id="cb16-248"><a href="#cb16-248" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;One-way ANOVA test F-value: &quot;</span>,</span>
+<span id="cb16-249"><a href="#cb16-249" aria-hidden="true" tabindex="-1"></a>   anova<span class="sc">$</span>F, </span>
+<span id="cb16-250"><a href="#cb16-250" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;, p-value: &quot;</span>,</span>
+<span id="cb16-251"><a href="#cb16-251" aria-hidden="true" tabindex="-1"></a>   anova<span class="sc">$</span>p</span>
+<span id="cb16-252"><a href="#cb16-252" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb16-253"><a href="#cb16-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a><span class="fu">## 6. Does Sex significantly influence TS?</span></span>
-<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q6}</span></span>
-<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Statistical difference&quot;</span></span>
-<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb16-254"><a href="#cb16-254" aria-hidden="true" tabindex="-1"></a>plt_q6 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb16-255"><a href="#cb16-255" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb16-256"><a href="#cb16-256" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(Sex, TS)) <span class="sc">+</span></span>
+<span id="cb16-257"><a href="#cb16-257" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_grid</span>(. <span class="sc">~</span> Experiment) <span class="sc">+</span></span>
+<span id="cb16-258"><a href="#cb16-258" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>, <span class="at">subtitle =</span> subtitle) <span class="sc">+</span></span>
+<span id="cb16-259"><a href="#cb16-259" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>))</span>
 <span id="cb16-260"><a href="#cb16-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a>t <span class="ot">=</span> dat <span class="sc">|&gt;</span> <span class="fu">t_test</span>(TS <span class="sc">~</span> Sex)</span>
-<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a>anova <span class="ot">=</span> dat <span class="sc">|&gt;</span> <span class="fu">anova_test</span>(TS <span class="sc">~</span> Sex)</span>
-<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a>subtitle <span class="ot">=</span> <span class="fu">str_c</span>(</span>
-<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Two groups of TS observations: M and F</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;Welch&#39;s t-test p-value: &quot;</span>,</span>
-<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a>   <span class="fu">signif</span>(t<span class="sc">$</span>p, <span class="dv">3</span>), <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>,</span>
-<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;One-way ANOVA test F-value: &quot;</span>,</span>
-<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a>   anova<span class="sc">$</span>F, </span>
-<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;, p-value: &quot;</span>,</span>
-<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>   anova<span class="sc">$</span>p</span>
-<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-261"><a href="#cb16-261" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q6_differences.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-262"><a href="#cb16-262" aria-hidden="true" tabindex="-1"></a>plt_q6</span>
+<span id="cb16-263"><a href="#cb16-263" aria-hidden="true" tabindex="-1"></a><span class="co"># Then answer this, in your text: Sex is a property of a SUBJECT, and you have</span></span>
+<span id="cb16-264"><a href="#cb16-264" aria-hidden="true" tabindex="-1"></a><span class="co"># 30 subjects but 210 rows. What is your real sample size, and what does using</span></span>
+<span id="cb16-265"><a href="#cb16-265" aria-hidden="true" tabindex="-1"></a><span class="co"># 210 do to your p-value?</span></span>
+<span id="cb16-266"><a href="#cb16-266" aria-hidden="true" tabindex="-1"></a><span class="co"># Try at least two approaches and report whether they agree.</span></span>
+<span id="cb16-267"><a href="#cb16-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-268"><a href="#cb16-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-269"><a href="#cb16-269" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES</span><span class="co">]</span></span>
+<span id="cb16-270"><a href="#cb16-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-271"><a href="#cb16-271" aria-hidden="true" tabindex="-1"></a>t test &amp; anova p value &gt; 0.05 so difference between group means is not statistically significant</span>
+<span id="cb16-272"><a href="#cb16-272" aria-hidden="true" tabindex="-1"></a>anova F value is close to 1 which means not much variation / difference between the means at all</span>
+<span id="cb16-273"><a href="#cb16-273" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-274"><a href="#cb16-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a>plt_q6 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(Sex, TS)) <span class="sc">+</span></span>
-<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a>      <span class="fu">facet_grid</span>(. <span class="sc">~</span> Experiment) <span class="sc">+</span></span>
-<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>, <span class="at">subtitle =</span> subtitle) <span class="sc">+</span></span>
-<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb16-275"><a href="#cb16-275" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Linear regression: TS as a function of T_op</span></span>
+<span id="cb16-276"><a href="#cb16-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-277"><a href="#cb16-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q7}</span></span>
+<span id="cb16-278"><a href="#cb16-278" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Linear regression&quot;</span></span>
+<span id="cb16-279"><a href="#cb16-279" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb16-280"><a href="#cb16-280" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
 <span id="cb16-281"><a href="#cb16-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q6_differences.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>plt_q6</span>
-<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a><span class="co"># Then answer this, in your text: Sex is a property of a SUBJECT, and you have</span></span>
-<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a><span class="co"># 30 subjects but 210 rows. What is your real sample size, and what does using</span></span>
-<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a><span class="co"># 210 do to your p-value?</span></span>
-<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a><span class="co"># Try at least two approaches and report whether they agree.</span></span>
-<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>**Interpretation.** <span class="co">[</span><span class="ot">WRITE 2–3 SENTENCES</span><span class="co">]</span></span>
-<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>t test &amp; anova p value &gt; 0.05 so difference between group means is not statistically significant</span>
-<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a>anova F value is close to 1 which means not much variation / difference between the means at all</span>
-<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a><span class="fu">## 7. Linear regression: TS as a function of T_op</span></span>
-<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q7}</span></span>
-<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Linear regression&quot;</span></span>
-<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
-<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> <span class="fu">lm</span>(TS <span class="sc">~</span> T_op, dat)</span>
-<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a>mae <span class="ot">=</span> <span class="fu">mae</span>(dat<span class="sc">$</span>TS, <span class="fu">predict</span>(model))</span>
-<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">=</span> <span class="fu">rmse</span>(dat<span class="sc">$</span>TS, <span class="fu">predict</span>(model))</span>
-<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a>caption <span class="ot">=</span> <span class="fu">str_c</span>(</span>
-<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;TS = &quot;</span>, <span class="fu">signif</span>(model<span class="sc">$</span>coefficients[<span class="st">&quot;T_op&quot;</span>], <span class="dv">2</span>),</span>
-<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot; × T_op - &quot;</span>, <span class="sc">-</span><span class="fu">signif</span>(model<span class="sc">$</span>coefficients[<span class="st">&quot;(Intercept)&quot;</span>], <span class="dv">2</span>),</span>
-<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;</span><span class="sc">\n</span><span class="st">R² = &quot;</span>, <span class="fu">signif</span>(<span class="fu">summary</span>(model)<span class="sc">$</span>r.squared, <span class="dv">2</span>),</span>
-<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;</span><span class="sc">\n</span><span class="st">MAE = &quot;</span>, <span class="fu">signif</span>(mae, <span class="dv">2</span>),</span>
-<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;</span><span class="sc">\n</span><span class="st">RMSE = &quot;</span>, <span class="fu">signif</span>(rmse, <span class="dv">2</span>)</span>
-<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>neutral_temp <span class="ot">=</span> <span class="sc">-</span>model<span class="sc">$</span>coefficients[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">/</span>model<span class="sc">$</span>coefficients[<span class="st">&quot;T_op&quot;</span>]</span>
+<span id="cb16-282"><a href="#cb16-282" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> <span class="fu">lm</span>(TS <span class="sc">~</span> T_op, dat)</span>
+<span id="cb16-283"><a href="#cb16-283" aria-hidden="true" tabindex="-1"></a>mae <span class="ot">=</span> <span class="fu">mae</span>(dat<span class="sc">$</span>TS, <span class="fu">predict</span>(model))</span>
+<span id="cb16-284"><a href="#cb16-284" aria-hidden="true" tabindex="-1"></a>rmse <span class="ot">=</span> <span class="fu">rmse</span>(dat<span class="sc">$</span>TS, <span class="fu">predict</span>(model))</span>
+<span id="cb16-285"><a href="#cb16-285" aria-hidden="true" tabindex="-1"></a>caption <span class="ot">=</span> <span class="fu">str_c</span>(</span>
+<span id="cb16-286"><a href="#cb16-286" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;TS = &quot;</span>, <span class="fu">signif</span>(model<span class="sc">$</span>coefficients[<span class="st">&quot;T_op&quot;</span>], <span class="dv">2</span>),</span>
+<span id="cb16-287"><a href="#cb16-287" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot; × T_op - &quot;</span>, <span class="sc">-</span><span class="fu">signif</span>(model<span class="sc">$</span>coefficients[<span class="st">&quot;(Intercept)&quot;</span>], <span class="dv">2</span>),</span>
+<span id="cb16-288"><a href="#cb16-288" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;</span><span class="sc">\n</span><span class="st">R² = &quot;</span>, <span class="fu">signif</span>(<span class="fu">summary</span>(model)<span class="sc">$</span>r.squared, <span class="dv">2</span>),</span>
+<span id="cb16-289"><a href="#cb16-289" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;</span><span class="sc">\n</span><span class="st">MAE = &quot;</span>, <span class="fu">signif</span>(mae, <span class="dv">2</span>),</span>
+<span id="cb16-290"><a href="#cb16-290" aria-hidden="true" tabindex="-1"></a>   <span class="st">&quot;</span><span class="sc">\n</span><span class="st">RMSE = &quot;</span>, <span class="fu">signif</span>(rmse, <span class="dv">2</span>)</span>
+<span id="cb16-291"><a href="#cb16-291" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-292"><a href="#cb16-292" aria-hidden="true" tabindex="-1"></a>neutral_temp <span class="ot">=</span> <span class="sc">-</span>model<span class="sc">$</span>coefficients[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">/</span>model<span class="sc">$</span>coefficients[<span class="st">&quot;T_op&quot;</span>]</span>
+<span id="cb16-293"><a href="#cb16-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-294"><a href="#cb16-294" aria-hidden="true" tabindex="-1"></a>plt_q7 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb16-295"><a href="#cb16-295" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(T_op, TS)) <span class="sc">+</span></span>
+<span id="cb16-296"><a href="#cb16-296" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb16-297"><a href="#cb16-297" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-298"><a href="#cb16-298" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Operative Temperature (T_op, °C)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-299"><a href="#cb16-299" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb16-300"><a href="#cb16-300" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">label =</span> caption, <span class="at">x =</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>)</span>
+<span id="cb16-301"><a href="#cb16-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-302"><a href="#cb16-302" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q7_linear-regression.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-303"><a href="#cb16-303" aria-hidden="true" tabindex="-1"></a>plt_q7</span>
+<span id="cb16-304"><a href="#cb16-304" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-305"><a href="#cb16-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-306"><a href="#cb16-306" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q7_validity}</span></span>
+<span id="cb16-307"><a href="#cb16-307" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Linear regression diagnostics&quot;</span></span>
+<span id="cb16-308"><a href="#cb16-308" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
+<span id="cb16-309"><a href="#cb16-309" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
+<span id="cb16-310"><a href="#cb16-310" aria-hidden="true" tabindex="-1"></a><span class="co"># The four assumptions: linearity, constant variance, normal residuals,</span></span>
+<span id="cb16-311"><a href="#cb16-311" aria-hidden="true" tabindex="-1"></a><span class="co"># independent observations. Check all four and say which ones hold.</span></span>
+<span id="cb16-312"><a href="#cb16-312" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-313"><a href="#cb16-313" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">=</span> <span class="fu">resid</span>(model)</span>
 <span id="cb16-314"><a href="#cb16-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a>plt_q7 <span class="ot">=</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(T_op, TS)) <span class="sc">+</span></span>
-<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Thermal Sensation (TS)&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Operative Temperature (T_op, °C)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">label =</span> caption, <span class="at">x =</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">1</span>)</span>
-<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q7_linear-regression.png&quot;</span>, <span class="at">width =</span> <span class="dv">6</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a>plt_q7</span>
-<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-315"><a href="#cb16-315" aria-hidden="true" tabindex="-1"></a><span class="co"># normal residuals: holds</span></span>
+<span id="cb16-316"><a href="#cb16-316" aria-hidden="true" tabindex="-1"></a>p_val_residuals <span class="ot">=</span> <span class="fu">signif</span>(<span class="fu">shapiro.test</span>(residuals)<span class="sc">$</span>p.value, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb16-317"><a href="#cb16-317" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-318"><a href="#cb16-318" aria-hidden="true" tabindex="-1"></a>plt_q7_residuals_qq <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">r =</span> residuals) <span class="sc">|&gt;</span></span>
+<span id="cb16-319"><a href="#cb16-319" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> r)) <span class="sc">+</span></span>
+<span id="cb16-320"><a href="#cb16-320" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_qq</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb16-321"><a href="#cb16-321" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-322"><a href="#cb16-322" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Residuals Q-Q plot&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Theoretical&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb16-323"><a href="#cb16-323" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb16-324"><a href="#cb16-324" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb16-325"><a href="#cb16-325" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">label =</span> <span class="fu">str_c</span>(<span class="st">&quot;p-value: &quot;</span>, p_val_residuals))</span>
 <span id="cb16-326"><a href="#cb16-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-q7_validity}</span></span>
-<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: &quot;Linear regression validity&quot;</span></span>
-<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 8</span></span>
-<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 4</span></span>
-<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a><span class="co"># The four assumptions: linearity, constant variance, normal residuals,</span></span>
-<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a><span class="co"># independent observations. Check all four and say which ones hold.</span></span>
-<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">=</span> <span class="fu">resid</span>(model)</span>
-<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a><span class="co"># normal residuals: holds</span></span>
-<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>p_val_residuals <span class="ot">=</span> <span class="fu">signif</span>(<span class="fu">shapiro.test</span>(residuals)<span class="sc">$</span>p.value, <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb16-327"><a href="#cb16-327" aria-hidden="true" tabindex="-1"></a><span class="co"># linearity: visual check only, not perfectly linear, close</span></span>
+<span id="cb16-328"><a href="#cb16-328" aria-hidden="true" tabindex="-1"></a><span class="co"># homoscedasticity (constant variance): holds</span></span>
+<span id="cb16-329"><a href="#cb16-329" aria-hidden="true" tabindex="-1"></a>bp_test_p_val <span class="ot">=</span> <span class="fu">signif</span>(<span class="fu">ncvTest</span>(model)<span class="sc">$</span>p, <span class="dv">2</span>)</span>
+<span id="cb16-330"><a href="#cb16-330" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-331"><a href="#cb16-331" aria-hidden="true" tabindex="-1"></a>plt_q7_residuals_variance <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">fitted</span>(model), <span class="at">y =</span> residuals) <span class="sc">|&gt;</span></span>
+<span id="cb16-332"><a href="#cb16-332" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb16-333"><a href="#cb16-333" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb16-334"><a href="#cb16-334" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-335"><a href="#cb16-335" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb16-336"><a href="#cb16-336" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Residuals vs Fitted&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Fitted Values&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Residuals&quot;</span>) <span class="sc">+</span></span>
+<span id="cb16-337"><a href="#cb16-337" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">label =</span> <span class="fu">str_c</span>(<span class="st">&quot;BP test p-value: &quot;</span>, bp_test_p_val))</span>
 <span id="cb16-338"><a href="#cb16-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a>plt_q7_residuals_qq <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">r =</span> residuals) <span class="sc">|&gt;</span></span>
-<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> r)) <span class="sc">+</span></span>
-<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_qq</span>(<span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Residuals Q-Q plot&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Sample&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Theoretical&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="dv">4</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">label =</span> <span class="fu">str_c</span>(<span class="st">&quot;p-value: &quot;</span>, p_val_residuals))</span>
-<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a><span class="co"># linearity: visual check only, not perfectly linear, close</span></span>
-<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a><span class="co"># homoscedasticity (constant variance): holds</span></span>
-<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a>bp_test_p_val <span class="ot">=</span> <span class="fu">signif</span>(<span class="fu">ncvTest</span>(model)<span class="sc">$</span>p, <span class="dv">2</span>)</span>
-<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a>plt_q7_residuals_variance <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">fitted</span>(model), <span class="at">y =</span> residuals) <span class="sc">|&gt;</span></span>
-<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">&quot;gray&quot;</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a>      <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Residuals vs Fitted&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Fitted Values&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Residuals&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a>      <span class="fu">annotate</span>(<span class="st">&quot;text&quot;</span>, <span class="at">x =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">y =</span> <span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">vjust =</span> <span class="fl">1.5</span>, <span class="at">label =</span> <span class="fu">str_c</span>(<span class="st">&quot;BP test p-value: &quot;</span>, bp_test_p_val))</span>
-<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a><span class="co"># not sure how to check independence</span></span>
+<span id="cb16-339"><a href="#cb16-339" aria-hidden="true" tabindex="-1"></a><span class="co"># not sure how to check independence</span></span>
+<span id="cb16-340"><a href="#cb16-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-341"><a href="#cb16-341" aria-hidden="true" tabindex="-1"></a>plt_q7_check <span class="ot">=</span> plt_q7_residuals_qq <span class="sc">+</span> plt_q7_residuals_variance</span>
+<span id="cb16-342"><a href="#cb16-342" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q7_linear-regression-diagnostics.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
+<span id="cb16-343"><a href="#cb16-343" aria-hidden="true" tabindex="-1"></a>plt_q7_check</span>
+<span id="cb16-344"><a href="#cb16-344" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-345"><a href="#cb16-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-346"><a href="#cb16-346" aria-hidden="true" tabindex="-1"></a>**Interpretation.** [WRITE 2–3 SENTENCES. Report the slope with units, the R²,</span>
+<span id="cb16-347"><a href="#cb16-347" aria-hidden="true" tabindex="-1"></a>and the neutral temperature — the Top at which predicted TS = 0. Compare it to</span>
+<span id="cb16-348"><a href="#cb16-348" aria-hidden="true" tabindex="-1"></a>what PMV predicts.]</span>
+<span id="cb16-349"><a href="#cb16-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-350"><a href="#cb16-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-351"><a href="#cb16-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## 8. Your own research question</span></span>
+<span id="cb16-352"><a href="#cb16-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-353"><a href="#cb16-353" aria-hidden="true" tabindex="-1"></a>**Question:** <span class="co">[</span><span class="ot">WRITE YOUR QUESTION</span><span class="co">]</span></span>
+<span id="cb16-354"><a href="#cb16-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-355"><a href="#cb16-355" aria-hidden="true" tabindex="-1"></a><span class="in">```{r q8}</span></span>
+<span id="cb16-356"><a href="#cb16-356" aria-hidden="true" tabindex="-1"></a><span class="co"># could be interesting - do ppl tend to stay on an extreme? if someone is hot at the start are they near the hottest at the end</span></span>
+<span id="cb16-357"><a href="#cb16-357" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb16-358"><a href="#cb16-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-359"><a href="#cb16-359" aria-hidden="true" tabindex="-1"></a>**Interpretation.** [WRITE 2–3 SENTENCES — the take-away message you would put</span>
+<span id="cb16-360"><a href="#cb16-360" aria-hidden="true" tabindex="-1"></a>in a paper.]</span>
 <span id="cb16-361"><a href="#cb16-361" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a>plt_q7_check <span class="ot">=</span> plt_q7_residuals_qq <span class="sc">+</span> plt_q7_residuals_variance</span>
-<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">&quot;output/q7_linear-regression-diagnostics.png&quot;</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>)</span>
-<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a>plt_q7_check</span>
-<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a>**Interpretation.** [WRITE 2–3 SENTENCES. Report the slope with units, the R²,</span>
-<span id="cb16-368"><a href="#cb16-368" aria-hidden="true" tabindex="-1"></a>and the neutral temperature — the Top at which predicted TS = 0. Compare it to</span>
-<span id="cb16-369"><a href="#cb16-369" aria-hidden="true" tabindex="-1"></a>what PMV predicts.]</span>
-<span id="cb16-370"><a href="#cb16-370" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-371"><a href="#cb16-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-372"><a href="#cb16-372" aria-hidden="true" tabindex="-1"></a><span class="fu">## 8. Your own research question</span></span>
-<span id="cb16-373"><a href="#cb16-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-374"><a href="#cb16-374" aria-hidden="true" tabindex="-1"></a>**Question:** <span class="co">[</span><span class="ot">WRITE YOUR QUESTION</span><span class="co">]</span></span>
-<span id="cb16-375"><a href="#cb16-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-376"><a href="#cb16-376" aria-hidden="true" tabindex="-1"></a><span class="in">```{r q8}</span></span>
-<span id="cb16-377"><a href="#cb16-377" aria-hidden="true" tabindex="-1"></a><span class="co"># [WRITE YOUR CODE]</span></span>
-<span id="cb16-378"><a href="#cb16-378" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb16-379"><a href="#cb16-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-380"><a href="#cb16-380" aria-hidden="true" tabindex="-1"></a>**Interpretation.** [WRITE 2–3 SENTENCES — the take-away message you would put</span>
-<span id="cb16-381"><a href="#cb16-381" aria-hidden="true" tabindex="-1"></a>in a paper.]</span>
-<span id="cb16-382"><a href="#cb16-382" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-383"><a href="#cb16-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-384"><a href="#cb16-384" aria-hidden="true" tabindex="-1"></a><span class="fu">## Session information</span></span>
-<span id="cb16-385"><a href="#cb16-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-386"><a href="#cb16-386" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session}</span></span>
-<span id="cb16-387"><a href="#cb16-387" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
-<span id="cb16-388"><a href="#cb16-388" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
+<span id="cb16-362"><a href="#cb16-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-363"><a href="#cb16-363" aria-hidden="true" tabindex="-1"></a><span class="fu">## Session information</span></span>
+<span id="cb16-364"><a href="#cb16-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-365"><a href="#cb16-365" aria-hidden="true" tabindex="-1"></a><span class="in">```{r session}</span></span>
+<span id="cb16-366"><a href="#cb16-366" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb16-367"><a href="#cb16-367" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

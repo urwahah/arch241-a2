@@ -15,15 +15,15 @@ execute:
 
 ## Setup
 ```{r setup-packages}
-library(tidyverse)
-library(ggplot2)
-library(gt)
-library(ggh4x)
-library(patchwork)
-library(ggcorrplot)
-library(rstatix)
-library(Metrics)
-library(car)
+library(tidyverse) # dplyr and related packages
+library(ggplot2) # plotting
+library(gt) # printing tables
+library(ggh4x) # plotting customisation
+library(patchwork) # combining plots
+library(ggcorrplot) # correlation matrix
+library(rstatix) # statistical analysis
+library(Metrics) # statistical analysis
+library(car) # statistical analysis
 ```
 
 ```{r setup-theme}
@@ -47,26 +47,8 @@ d <- arch241a2
 dat = tibble(d) |>
    rename(T_op = Top) |> # for clarity
    mutate(Subject = factor(Subject, levels = as.character(sort(as.numeric(levels(Subject)))))) |> # relevel so it's sorted numerically, but kept as character for plotting
-   filter(Experiment != "P") # explain why
+   filter(Experiment != "P") # because this was not a real test condition
 ```
-
-## About this dataset — read before you start
-
-Thirty subjects each sat through seven conditions in a climate chamber in
-Guangzhou, giving 30 × 7 = 210 rows.
-
-| Variable | Meaning | Notes |
-|---|---|---|
-| `Top` | Operative temperature, °C | Equals air temperature here (MRT = Ta) |
-| `RH` | Relative humidity, % | Two levels: 50 and 70 |
-| `Sex` | F / M | 15 subjects each |
-| `Subject` | Subject ID, 1–30 | Each ID appears 7 times|
-| `TS` | Thermal sensation | ASHRAE scale, −4 cold … 0 neutral … +4 hot |
-| `TC` | Thermal discomfort | 0 = very comfortable … 4 = very uncomfortable |
-| `TA` | Thermal acceptability | Higher = more acceptable |
-| `PMV` | Predicted mean vote | Calculated from the design conditions |
-| `PPD` | Predicted % dissatisfied | Calculated from PMV |
-| `Experiment` | Condition A–F, plus P | P is pre-conditioning, not a test condition |
 
 ## 1. Statistical summary of all variables
 
@@ -108,11 +90,12 @@ tbl_q1 = summary_results |>
 
 tbl_q1
 gtsave(tbl_q1, "output/q1_statistical-summary.html")
-# Think: does a mean make sense for a factor? For a design variable like Top?
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES. What would you put in a paper?]
+**Interpretation.**
+For this question, I excluded the independent and categorical variables (T_op, RH, Sex, Subject, Experiment), because I don't think a statistical analysis of these alone provides any insights about the research. The PMV and PPD were directly calculated from the independent variables, so their distribution is also not particularly helpful.
 
+For the measured data collected (thermal acceptability, comfort, and sensation), we see a broad distribution within their ranges, with the mimimum/maximum values close to the extremes on the scales. The mean and median values are similar to each other (indicating the data may be normally distributed). The mean/median for TS and TA fall near the 'neutral' condition of 0, but the mean/median for TC is around 2 (slightly uncomfortable). This is an interesting incongruence in the data: if only the mean for TS/TA was near 0, I would guess that most occupants were always uncomfortably cold or hot with an even spread averaging out to 0. However, since the median is also near 0, perhaps it's due to the nature of the survey design and how occupants interact with the questions.
 
 ## 2. Histograms of TC and TS
 
@@ -144,9 +127,8 @@ plt_q2
 ggsave("output/q2_histograms.png", width = 6, height = 3, units = "in")
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES]
-i have simplified to single vote count rather than continuous scale
-
+**Interpretation.**
+While data for TC and TS were collected on a continuous scale, I have simplified the bins on the histograms to single vote counts for clearer interpretation. The histograms help clarify the previous summary: TS does look mostly normally distributed, but TC is skewed toward lower values. The TS data also largely agrees with the TC data: most people did not experience extreme thermal sensations (±3/4 bars are small) and thus were not extremely uncomfortable.
 
 ## 3. Boxplots of TS vs Sex, Subject and Experiment
 
@@ -170,21 +152,18 @@ plt_q3 = (plt_q3_sex + plt_q3_experiment) / plt_q3_subject
 
 plt_q3
 ggsave("output/q3_boxplots.png", width = 8, height = 6, units = "in")
-# The Subject one is the least obvious and the most informative — look at it carefully.
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES]
-
+**Interpretation.** Thermal sensation does not seem to vary significantly by sex, but has a broad distribution across the experiments and subjects. It makes sense that the thermal sensation generally increases as the experimental operative temperatures were increased from A-F; we can also infer that relative humidity seems to have a much smaller impact than temperature, because the C & D and E & F box plots are very similar. Most subjects have median TS close to 0 with two notable exceptions (16 and 19) who also reported some of the largest ranges. There are only two outlier points (as `ggplot` defines them, values more than 1.5xIQR from the 1st & 3rd quartiles), with agrees with the previous charts in that most people don't experience extreme thermal sensations.
 
 ## 4. Correlation matrix
-
-Variables: PMV, PPD, RH, TA, TC, TS, Top.
 
 ```{r fig-q4}
 #| fig-cap: "Correlation matrix"
 #| fig-width: 6
 #| fig-height: 6
 
+# Variables: PMV, PPD, RH, TA, TC, TS, Top.
 plt_q4 = dat |>
    select(T_op, RH, TS, TC, TA, PMV, PPD) |>
    cor() |>
@@ -374,7 +353,7 @@ what PMV predicts.]
 **Question:** [WRITE YOUR QUESTION]
 
 ```{r q8}
-# [WRITE YOUR CODE]
+# could be interesting - do ppl tend to stay on an extreme? if someone is hot at the start are they near the hottest at the end
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES — the take-away message you would put
