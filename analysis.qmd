@@ -21,6 +21,7 @@ library(gt)
 library(ggh4x)
 library(patchwork)
 library(ggcorrplot)
+library(rstatix)
 ```
 
 ```{r setup-theme}
@@ -43,7 +44,8 @@ load("data/arch241a2.rda")
 d <- arch241a2
 dat = tibble(d) |>
    rename(T_op = Top) |> # for clarity
-   mutate(Subject = factor(Subject, levels = as.character(sort(as.numeric(levels(Subject)))))) # relevel so it's sorted numerically, but kept as character for plotting
+   mutate(Subject = factor(Subject, levels = as.character(sort(as.numeric(levels(Subject)))))) |> # relevel so it's sorted numerically, but kept as character for plotting
+   filter(Experiment != "P") # explain why
 ```
 
 ## About this dataset — read before you start
@@ -159,12 +161,9 @@ q3_boxplot = function(df, var) {
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4))
 }
 
-dat_q3 = dat |>
-   filter(Experiment != "P") 
-   
-plt_q3_sex = q3_boxplot(dat_q3, "Sex")
-plt_q3_subject = q3_boxplot(dat_q3, "Subject")
-plt_q3_experiment = q3_boxplot(dat_q3, "Experiment")
+plt_q3_sex = q3_boxplot(dat, "Sex")
+plt_q3_subject = q3_boxplot(dat, "Subject")
+plt_q3_experiment = q3_boxplot(dat, "Experiment")
 plt_q3 = (plt_q3_sex + plt_q3_experiment) / plt_q3_subject
 
 plt_q3
@@ -253,7 +252,35 @@ plt_q5
 ## 6. Does Sex significantly influence TS?
 
 ```{r q6}
-# [WRITE YOUR CODE]
+#| fig-cap: "Statistical difference"
+#| fig-width: 6
+#| fig-height: 4
+
+t = dat |>
+   t_test(TS ~ Sex)
+
+anova = dat |>
+   anova_test(TS ~ Sex)
+
+subtitle = str_c(
+   "Two groups of TS observations: M and F\n",
+   "Welch's t-test p-value: ",
+   signif(t$p, 3), "\n",
+   "One-way ANOVA test F-value: ",
+   anova$F, 
+   ", p-value: ",
+   anova$p
+)
+
+plt_q6 = dat |>
+   ggplot() +
+      geom_boxplot(aes(Sex, TS)) +
+      facet_grid(. ~ Experiment) +
+      labs(y = "Thermal Sensation (TS)", subtitle = subtitle) +
+      scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4))
+
+ggsave("output/q6_differences.png")
+plt_q6
 # Then answer this, in your text: Sex is a property of a SUBJECT, and you have
 # 30 subjects but 210 rows. What is your real sample size, and what does using
 # 210 do to your p-value?
@@ -261,6 +288,9 @@ plt_q5
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES]
+
+t test & anova p value > 0.05 so difference between group means is not statistically significant
+anova F value is close to 1 which means not much variation / difference between the means at all
 
 
 ## 7. Linear regression: TS as a function of Top
