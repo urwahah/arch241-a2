@@ -22,6 +22,8 @@ library(ggh4x)
 library(patchwork)
 library(ggcorrplot)
 library(rstatix)
+library(Metrics)
+library(car)
 ```
 
 ```{r setup-theme}
@@ -139,7 +141,7 @@ plt_q2 = dat |>
       )
 
 plt_q2
-ggsave("output/q2_histograms.png")
+ggsave("output/q2_histograms.png", width = 6, height = 3, units = "in")
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES]
@@ -167,7 +169,7 @@ plt_q3_experiment = q3_boxplot(dat, "Experiment")
 plt_q3 = (plt_q3_sex + plt_q3_experiment) / plt_q3_subject
 
 plt_q3
-ggsave("output/q3_boxplots.png")
+ggsave("output/q3_boxplots.png", width = 8, height = 6, units = "in")
 # The Subject one is the least obvious and the most informative — look at it carefully.
 ```
 
@@ -194,7 +196,7 @@ plt_q4 = dat |>
          axis.text.x = element_text(angle = 0))
 
 plt_q4
-ggsave("output/q4_correlation-matrix.png")
+ggsave("output/q4_correlation-matrix.png", width = 6, height = 6, units = "in")
 ```
 
 ```{r fig-q4_high-corr}
@@ -219,7 +221,7 @@ explain what happened.
 
 ## 5. Normality of TC and TS
 
-```{r q5}
+```{r fig-q5}
 #| fig-cap: "Normality"
 #| fig-width: 8
 #| fig-height: 4
@@ -231,7 +233,7 @@ q5_qqplot = function(df, var, varlabel, axlim) {
    df |>
       ggplot(aes(sample = .data[[var]])) +
          stat_qq(size = 1.5) +
-         stat_qq_line(color = "gray") +
+         stat_qq_line(color = "gray", linetype = 2) +
          labs(title = varlabel, y = "Sample", x = "Theoretical") +
          scale_x_continuous(breaks = seq(-4, 4, 1), limits = axlim) +
          scale_y_continuous(breaks = seq(-4, 4, 1), limits = axlim) +
@@ -242,7 +244,7 @@ plt_q5_TC = q5_qqplot(dat, "TC", "Thermal Comfort (TC)", c(1, 4))
 plt_q5_TS = q5_qqplot(dat, "TS", "Thermal Sensation (TS)", c(-4, 4))
 plt_q5 = plt_q5_TC + plt_q5_TS
 
-ggsave("output/q5_normality.png")
+ggsave("output/q5_normality.png", width = 8, height = 4, units = "in")
 plt_q5
 ```
 
@@ -251,16 +253,14 @@ plt_q5
 
 ## 6. Does Sex significantly influence TS?
 
-```{r q6}
+```{r fig-q6}
 #| fig-cap: "Statistical difference"
 #| fig-width: 6
 #| fig-height: 4
 
-t = dat |>
-   t_test(TS ~ Sex)
+t = dat |> t_test(TS ~ Sex)
 
-anova = dat |>
-   anova_test(TS ~ Sex)
+anova = dat |> anova_test(TS ~ Sex)
 
 subtitle = str_c(
    "Two groups of TS observations: M and F\n",
@@ -279,7 +279,7 @@ plt_q6 = dat |>
       labs(y = "Thermal Sensation (TS)", subtitle = subtitle) +
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4))
 
-ggsave("output/q6_differences.png")
+ggsave("output/q6_differences.png", width = 6, height = 4, units = "in")
 plt_q6
 # Then answer this, in your text: Sex is a property of a SUBJECT, and you have
 # 30 subjects but 210 rows. What is your real sample size, and what does using
@@ -293,12 +293,75 @@ t test & anova p value > 0.05 so difference between group means is not statistic
 anova F value is close to 1 which means not much variation / difference between the means at all
 
 
-## 7. Linear regression: TS as a function of Top
+## 7. Linear regression: TS as a function of T_op
 
-```{r q7}
-# [WRITE YOUR CODE] Fit the model, then TEST ITS VALIDITY.
+```{r fig-q7}
+#| fig-cap: "Linear regression"
+#| fig-width: 6
+#| fig-height: 4
+
+model = lm(TS ~ T_op, dat)
+mae = mae(dat$TS, predict(model))
+rmse = rmse(dat$TS, predict(model))
+caption = str_c(
+   "TS = ", signif(model$coefficients["T_op"], 2),
+   " × T_op - ", -signif(model$coefficients["(Intercept)"], 2),
+   "\nR² = ", signif(summary(model)$r.squared, 2),
+   "\nMAE = ", signif(mae, 2),
+   "\nRMSE = ", signif(rmse, 2)
+)
+neutral_temp = -model$coefficients["(Intercept)"]/model$coefficients["T_op"]
+
+plt_q7 = dat |>
+   ggplot(aes(T_op, TS)) +
+      geom_point() +
+      geom_smooth(method = "lm", color = "black") +
+      labs(y = "Thermal Sensation (TS)", x = "Operative Temperature (T_op, °C)") +
+      scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
+      annotate("text", label = caption, x = 20, y = 4, hjust = 0, vjust = 1)
+
+ggsave("output/q7_linear-regression.png", width = 6, height = 4, units = "in")
+plt_q7
+```
+
+```{r fig-q7_validity}
+#| fig-cap: "Linear regression diagnostics"
+#| fig-width: 8
+#| fig-height: 4
 # The four assumptions: linearity, constant variance, normal residuals,
 # independent observations. Check all four and say which ones hold.
+
+residuals = resid(model)
+
+# normal residuals: holds
+p_val_residuals = signif(shapiro.test(residuals)$p.value, digits = 2)
+
+plt_q7_residuals_qq = tibble(r = residuals) |>
+   ggplot(aes(sample = r)) +
+      stat_qq(size = 1.5) +
+      stat_qq_line(color = "gray", linetype = 2) +
+      labs(title = "Residuals Q-Q plot", y = "Sample", x = "Theoretical") + 
+      scale_x_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
+      scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
+      annotate("text", x = -Inf, y = 4, hjust = -0.1, label = str_c("p-value: ", p_val_residuals))
+
+# linearity: visual check only, not perfectly linear, close
+# homoscedasticity (constant variance): holds
+bp_test_p_val = signif(ncvTest(model)$p, 2)
+
+plt_q7_residuals_variance = tibble(x = fitted(model), y = residuals) |>
+   ggplot(aes(x, y)) +
+      geom_point() +
+      geom_smooth(color = "black") +
+      geom_hline(yintercept = 0, color = "gray", linetype = 2) +
+      labs(title = "Residuals vs Fitted", x = "Fitted Values", y = "Residuals") +
+      annotate("text", x = -Inf, y = Inf, hjust = -0.1, vjust = 1.5, label = str_c("BP test p-value: ", bp_test_p_val))
+
+# not sure how to check independence
+
+plt_q7_check = plt_q7_residuals_qq + plt_q7_residuals_variance
+ggsave("output/q7_linear-regression-diagnostics.png", width = 8, height = 4, units = "in")
+plt_q7_check
 ```
 
 **Interpretation.** [WRITE 2–3 SENTENCES. Report the slope with units, the R²,
