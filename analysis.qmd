@@ -236,8 +236,7 @@ ggsave("output/q5_normality.png", width = 8, height = 4, units = "in")
 plt_q5
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES. Are they normal? Does it matter, and for what?]
-
+**Interpretation.** The statistical analysis of normality agrees with the observations from the histograms. TC has a very low Shapiro-Wilk p-value, meaning that the data are not normally distributed. The opposite is true for TS. Many further statistical analyses like the t-test assume normality, so we can apply these tests to thermal sensation for additional analysis.
 
 ## 6. Does Sex significantly influence TS?
 
@@ -269,17 +268,9 @@ plt_q6 = dat |>
 
 ggsave("output/q6_differences.png", width = 6, height = 4, units = "in")
 plt_q6
-# Then answer this, in your text: Sex is a property of a SUBJECT, and you have
-# 30 subjects but 210 rows. What is your real sample size, and what does using
-# 210 do to your p-value?
-# Try at least two approaches and report whether they agree.
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES]
-
-t test & anova p value > 0.05 so difference between group means is not statistically significant
-anova F value is close to 1 which means not much variation / difference between the means at all
-
+**Interpretation.** The plot below shows the thermal sensation for each sex (they are grouped by the experiment ID to better visualise the differences; the statistical tests were done for just one categorical group of sex). The ANOVA F-value is close to 1, which means there is low variation between the means of the two groups (which agrees with the boxplot in @fig-q3). The p-value for both ANOVA and t-tests is well above 0.05, indicating that the differences between the two groups is not statistically significant.
 
 ## 7. Linear regression: TS as a function of T_op
 
@@ -298,7 +289,7 @@ caption = str_c(
    "\nMAE = ", signif(mae, 2),
    "\nRMSE = ", signif(rmse, 2)
 )
-neutral_temp = -model$coefficients["(Intercept)"]/model$coefficients["T_op"]
+neutral_temp = signif(-model$coefficients["(Intercept)"]/model$coefficients["T_op"], 3)
 
 plt_q7 = dat |>
    ggplot(aes(T_op, TS)) +
@@ -306,11 +297,20 @@ plt_q7 = dat |>
       geom_smooth(method = "lm") +
       labs(y = "Thermal Sensation (TS)", x = "Operative Temperature (T_op, °C)") +
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
-      annotate("text", label = caption, x = 20, y = 4, hjust = 0, vjust = 1)
+      annotate("text", label = caption, x = 20, y = 4, hjust = 0, vjust = 1) +
+      geom_hline(yintercept = 0, color = "gray", linetype = 2) +
+      geom_vline(xintercept = neutral_temp, color = "gray", linetype = 2)
 
 ggsave("output/q7_linear-regression.png", width = 6, height = 4, units = "in")
 plt_q7
 ```
+
+**Interpretation.** The linear regression model along with 3 evaluation metrics are listed in the figure above. The neutral temperature (temperature at which predicted TS = 0) is `r neutral_temp`°C. To check the validity of the model, we can review the four assumptions:
+
+- Linearity: the linear correlation between the two variables can be seen in the plot above. TS and T_op also have a high correlation coefficient of 0.87 as shown in @fig-q4.
+- Normality of residuals: @fig-q7_validity below shows a Q-Q plot of the residuals. With p = 0.019 < 0.05, the residuals are normally distributed.
+- Homoscedasticity of residuals: also shown in @fig-q7_validity, plotting the residuals against the fitted values. While it doesn't have a perfectly constant variance, the assumption holds. The Breusch-Pagan p-value of 0.95 > 0.05 also confirms this.
+- Independent observations: I am not sure how this can be confirmed with the data. The study design may violate this assumption, since many of the observations were taken at the same time and at the same place.
 
 ```{r fig-q7_validity}
 #| fig-cap: "Linear regression diagnostics"
@@ -333,7 +333,6 @@ plt_q7_residuals_qq = tibble(r = residuals) |>
       scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
       annotate("text", x = -Inf, y = 4, hjust = -0.1, label = str_c("p-value: ", p_val_residuals))
 
-# linearity: visual check only, not perfectly linear, close
 # homoscedasticity (constant variance): holds
 bp_test_p_val = signif(ncvTest(model)$p, 2)
 
@@ -352,25 +351,40 @@ ggsave("output/q7_linear-regression-diagnostics.png", width = 8, height = 4, uni
 plt_q7_check
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES. Report the slope with units, the R²,
-and the neutral temperature — the Top at which predicted TS = 0. Compare it to
-what PMV predicts.]
-
-
-## 8. Your own research question
+## 8. Your own research question: TS as a function of PMV (T_op and RH)
 
 **Question:** [WRITE YOUR QUESTION]
 
 ```{r q8}
-dat |>
+#| fig-cap: "PMV Linear regression"
+#| fig-width: 6
+#| fig-height: 4
+
+model_2 = lm(TS ~ PMV, dat)
+mae_2 = mae(dat$TS, predict(model_2))
+rmse_2 = rmse(dat$TS, predict(model_2))
+caption_2 = str_c(
+   "TS = ", signif(model_2$coefficients["PMV"], 2),
+   " × PMV - ", -signif(model_2$coefficients["(Intercept)"], 2),
+   "\nR² = ", signif(summary(model_2)$r.squared, 2),
+   "\nMAE = ", signif(mae_2, 2),
+   "\nRMSE = ", signif(rmse_2, 2)
+)
+
+plt_q8 = dat |>
    ggplot(aes(PMV, TS)) +
-   geom_point() +
-   geom_smooth(method = "lm")
+      geom_point() +
+      geom_smooth(method = "lm") +
+      labs(y = "Thermal Sensation (TS)", x = "PMV") +
+      scale_y_continuous(breaks = seq(-4, 4, 1), limits = c(-4, 4)) +
+      scale_x_continuous(breaks = seq(-3, 3, 1), limits = c(-3, 3)) +
+      annotate("text", label = caption_2, x = -3, y = 4, hjust = 0, vjust = 1)
+
+ggsave("output/q8_pmv-linear-regression.png", width = 6, height = 4, units = "in")
+plt_q8
 ```
 
-**Interpretation.** [WRITE 2–3 SENTENCES — the take-away message you would put
-in a paper.]
-
+**Interpretation.** I repeated the analysis in question 7 with PMV instead of T_op because PMV is a function of both the temperature and relative humidity (and the other factors held constant like metabolic rate) and I would expect the addition of RH to improve the model at least a little. However, this figure shows there is negligible difference in the two models. This does agree with the observation that RH does not really affect TS seen in the boxplots in @fig-q3. Additional experiments with a larger variation of RH than just the two tested would help clarify this relationship.
 
 ## Session information
 
